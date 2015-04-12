@@ -111,4 +111,14 @@ models.ContactInformation = function (opts) {
     this.value = opts.value || null;
 };
 
+models.Address = function (opts) {
+    this.type = opts.type || null;
+    this.label = opts.label || null;
+    this.street = opts.street || null;
+    this.locality = opts.locality || null;
+    this.region = opts.region || null;
+    this.postcode = opts.postcode || null;
+    this.country = opts.country || null;
+};
+
 module.exports = models;
