@@ -58,4 +58,9 @@ models.Message = function (opts) {
     this.attachedMessages = opts.attachedMessages || [];
 };
 
+models.Emailer = function (opts) {
+    this.name = opts.name || null;
+    this.email = opts.email || null;
+};
+
 module.exports = models;
