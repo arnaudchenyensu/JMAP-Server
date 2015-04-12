@@ -151,4 +151,21 @@ models.FilterCondition = function (opts) {
     this.attendee = opts.attendee || null;
 };
 
+models.Recurrence = function (opts) {
+    this.frequency = opts.frequency || null;
+    this.interval = opts.interval || null;
+    this.firstDayOfWeek = opts.firstDayOfWeek || null;
+    this.byDay = opts.byDay || [];
+    this.byDate = opts.byDate || [];
+    this.byMonth = opts.byMonth || [];
+    this.byYearDay = opts.byYearDay || [];
+    this.byWeekNo = opts.byWeekNo || [];
+    this.byHour = opts.byHour || [];
+    this.byMinute = opts.byMinute || [];
+    this.bySecond = opts.bySecond || [];
+    this.bySetPosition = opts.bySetPosition || [];
+    this.count = opts.count || null;
+    this.until = opts.until || null;
+};
+
 module.exports = models;
