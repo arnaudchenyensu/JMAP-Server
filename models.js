@@ -121,4 +121,11 @@ models.Address = function (opts) {
     this.country = opts.country || null;
 };
 
+models.File = function (opts) {
+    this.url = opts.url || null;
+    this.type = opts.type || null;
+    this.name = opts.name || null;
+    this.size = opts.size || null;
+};
+
 module.exports = models;
