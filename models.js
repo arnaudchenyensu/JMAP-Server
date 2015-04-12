@@ -200,4 +200,14 @@ models.Participant = function (opts) {
     this.rsvp = opts.rsvp || "";
 };
 
+models.AccountState = function (opts) {
+    this.mailboxes = opts.mailboxes || null;
+    this.threads = opts.threads || null;
+    this.messages = opts.messages || null;
+    this.contactGroups = opts.contactGroups || null;
+    this.contacts = opts.contacts || null;
+    this.calendars = opts.calendars || null;
+    this.calendarEvents = opts.calendarEvents || null;
+};
+
 module.exports = models;
