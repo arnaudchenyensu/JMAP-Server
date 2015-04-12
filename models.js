@@ -193,4 +193,11 @@ models.Alert = function (opts) {
     this.type = opts.type || null;
 };
 
+models.Participant = function (opts) {
+    this.name = opts.name || null;
+    this.email = opts.email || null;
+    this.isYou = opts.isYou || null;
+    this.rsvp = opts.rsvp || "";
+};
+
 module.exports = models;
