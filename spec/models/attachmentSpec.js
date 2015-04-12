@@ -1,6 +1,6 @@
 var models = require('../../models.js');
 
-describe("An attachment", function() {
+describe("An attachment object", function() {
 
     var opts = {};
     var attachment = new models.Attachment(opts);

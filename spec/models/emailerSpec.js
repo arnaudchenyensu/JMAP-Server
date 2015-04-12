@@ -1,6 +1,6 @@
 var models = require('../../models.js');
 
-describe("An emailer", function() {
+describe("An emailer object", function() {
 
     var opts = {};
     var emailer = new models.Emailer(opts);

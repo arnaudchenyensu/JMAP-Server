@@ -1,6 +1,6 @@
 var models = require('../../models.js');
 
-describe("A thread", function() {
+describe("A thread object", function() {
 
     var opts = {};
     var thread = new models.Thread(opts);

@@ -1,6 +1,6 @@
 var models = require('../../models.js');
 
-describe("A message", function() {
+describe("A message object", function() {
 
     var opts = {};
     var message = new models.Message(opts);

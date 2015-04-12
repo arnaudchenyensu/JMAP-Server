@@ -1,6 +1,6 @@
 var models = require('../../models.js');
 
-describe("An account", function() {
+describe("An account object", function() {
 
     var opts = {};
     var account = new models.Account(opts);
