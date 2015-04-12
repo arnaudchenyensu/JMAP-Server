@@ -79,4 +79,9 @@ models.SearchSnippet = function (opts) {
     this.preview = opts.preview || null;
 };
 
+models.ContactGroup = function (opts) {
+    this.name = opts.name || null;
+    this.contactIds = opts.contactIds || [];
+};
+
 module.exports = models;
