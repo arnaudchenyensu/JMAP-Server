@@ -73,4 +73,10 @@ models.Attachment = function (opts) {
     this.height = opts.height || null;
 };
 
+models.SearchSnippet = function (opts) {
+    this.messageId = opts.messageId || null;
+    this.subject = opts.subject || null;
+    this.preview = opts.preview || null;
+};
+
 module.exports = models;
