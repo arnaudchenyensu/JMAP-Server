@@ -27,4 +27,8 @@ models.Mailbox = function (opts) {
     this.totalThreads = opts.totalThreads || null;
     this.unreadThreads = opts.unreadThreads || null;
 };
+
+models.Thread = function (opts) {
+    this.messageIds = opts.messageIds || [];
+};
 module.exports = models;
