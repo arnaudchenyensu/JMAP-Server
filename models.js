@@ -128,4 +128,10 @@ models.File = function (opts) {
     this.size = opts.size || null;
 };
 
+models.Calendar = function (opts) {
+    this.name = opts.name || null;
+    this.colour = opts.colour || null;
+    this.isVisible = opts.isVisible || null;
+};
+
 module.exports = models;
