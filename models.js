@@ -84,4 +84,25 @@ models.ContactGroup = function (opts) {
     this.contactIds = opts.contactIds || [];
 };
 
+models.Contact = function (opts) {
+    this.isFlagged = opts.isFlagged || null;
+    this.avatar = opts.avatar || null;
+    this.prefix = opts.prefix || "";
+    this.firstName = opts.firstName || "";
+    this.lastName = opts.lastName || "";
+    this.suffix = opts.suffix || "";
+    this.nickname = opts.nickname || "";
+    this.birthday = opts.birthday || "0000-00-00";
+    this.anniversary = opts.anniversary || "0000-00-00";
+    this.company = opts.company || "";
+    this.department = opts.department || "";
+    this.jobTitle = opts.jobTitle || "";
+    this.emails = opts.emails || [];
+    this.defaultEmailIndex = opts.defaultEmailIndex || null;
+    this.phones = opts.phones || [];
+    this.online = opts.online || [];
+    this.addresses = opts.addresses || [];
+    this.notes = opts.notes || "";
+};
+
 module.exports = models;
