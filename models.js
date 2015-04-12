@@ -168,4 +168,9 @@ models.Recurrence = function (opts) {
     this.until = opts.until || null;
 };
 
+models.Alert = function (opts) {
+    this.minutesBefore = opts.minutesBefore || null;
+    this.type = opts.type || null;
+};
+
 module.exports = models;
