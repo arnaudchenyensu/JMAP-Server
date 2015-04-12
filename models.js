@@ -151,6 +151,26 @@ models.FilterCondition = function (opts) {
     this.attendee = opts.attendee || null;
 };
 
+models.CalendarEvent = function (opts) {
+    this.calendarId = opts.calendarId || null;
+    this.summary = opts.summary || null;
+    this.description = opts.description || null;
+    this.location = opts.location || null;
+    this.showAsFree = opts.showAsFree || null;
+    this.isAllDay = opts.isAllDay || null;
+    this.utcStart = opts.utcStart || null;
+    this.utcEnd = opts.utcEnd || null;
+    this.startTimeZone = opts.startTimeZone || null;
+    this.endTimeZone = opts.endTimeZone || null;
+    this.recurrence = opts.recurrence || null;
+    this.inclusions = opts.inclusions || [];
+    this.exceptions = opts.exceptions || [];
+    this.alerts = opts.alerts || [];
+    this.organizer = opts.organizer || null;
+    this.attendees = opts.attendees || [];
+    this.attachments = opts.attachments || [];
+};
+
 models.Recurrence = function (opts) {
     this.frequency = opts.frequency || null;
     this.interval = opts.interval || null;
