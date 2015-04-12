@@ -134,4 +134,9 @@ models.Calendar = function (opts) {
     this.isVisible = opts.isVisible || null;
 };
 
+models.FilterOperator = function (opts) {
+    this.operator = opts.operator || null;
+    this.conditions = opts.conditions || [];
+};
+
 module.exports = models;
