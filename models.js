@@ -31,4 +31,31 @@ models.Mailbox = function (opts) {
 models.Thread = function (opts) {
     this.messageIds = opts.messageIds || [];
 };
+
+models.Message = function (opts) {
+    this.threadId = opts.threadId || null;
+    this.mailboxIds = opts.mailboxIds || [];
+    this.inReplyToMessageId = opts.inReplyToMessageId || null;
+    this.isUnread = opts.isUnread || null;
+    this.isFlagged = opts.isFlagged || null;
+    this.isAnswered = opts.isAnswered || null;
+    this.isDraft = opts.isDraft || null;
+    this.hasAttachment = opts.hasAttachment || null;
+    this.rawUrl = opts.rawUrl || null;
+    this.headers = opts.headers || [];
+    this.from = opts.from || null;
+    this.to = opts.to || [];
+    this.cc = opts.cc || [];
+    this.bcc = opts.bcc || [];
+    this.replyTo = opts.replyTo || null;
+    this.subject = opts.subject || null;
+    this.date = opts.date || null;
+    this.size = opts.size || null;
+    this.preview = opts.preview || null;
+    this.textBody = opts.textBody || null;
+    this.htmlBody = opts.htmlBody || null;
+    this.attachments = opts.attachments || [];
+    this.attachedMessages = opts.attachedMessages || [];
+};
+
 module.exports = models;
