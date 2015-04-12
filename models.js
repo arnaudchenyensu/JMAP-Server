@@ -105,4 +105,10 @@ models.Contact = function (opts) {
     this.notes = opts.notes || "";
 };
 
+models.ContactInformation = function (opts) {
+    this.type = opts.type || null;
+    this.label = opts.label || null;
+    this.value = opts.value || null;
+};
+
 module.exports = models;
