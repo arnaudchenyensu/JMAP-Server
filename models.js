@@ -139,4 +139,16 @@ models.FilterOperator = function (opts) {
     this.conditions = opts.conditions || [];
 };
 
+models.FilterCondition = function (opts) {
+    this.inCalendars = opts.inCalendars || [];
+    this.before = opts.before || null;
+    this.after = opts.after || null;
+    this.text = opts.text || null;
+    this.summary = opts.summary || null;
+    this.description = opts.description || null;
+    this.location = opts.location || null;
+    this.organizer = opts.organizer || null;
+    this.attendee = opts.attendee || null;
+};
+
 module.exports = models;
