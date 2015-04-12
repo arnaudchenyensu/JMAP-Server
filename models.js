@@ -63,4 +63,14 @@ models.Emailer = function (opts) {
     this.email = opts.email || null;
 };
 
+models.Attachment = function (opts) {
+    this.url = opts.url || null;
+    this.type = opts.type || null;
+    this.name = opts.name || null;
+    this.size = opts.size || null;
+    this.isInline = opts.isInline || null;
+    this.width = opts.width || null;
+    this.height = opts.height || null;
+};
+
 module.exports = models;
