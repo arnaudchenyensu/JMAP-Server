@@ -16,16 +16,16 @@ models.Mailbox = function (opts) {
     this.role = opts.role || null;
     this.precedence = opts.precedence || null;
     this.mustBeOnlyMailbox = opts.mustBeOnlyMailbox || null;
-    this.mayReadMessageList = opts.mayReadMessageList || null;
-    this.mayAddMessages = opts.mayAddMessages || null;
-    this.mayRemoveMessages = opts.mayRemoveMessages || null;
-    this.mayCreateChild = opts.mayCreateChild || null;
-    this.mayRenameMailbox = opts.mayRenameMailbox || null;
-    this.mayDeleteMailbox = opts.mayDeleteMailbox || null;
-    this.totalMessages = opts.totalMessages || null;
-    this.unreadMessages = opts.unreadMessages || null;
-    this.totalThreads = opts.totalThreads || null;
-    this.unreadThreads = opts.unreadThreads || null;
+    this.mayReadMessageList = opts.mayReadMessageList || true;
+    this.mayAddMessages = opts.mayAddMessages || true;
+    this.mayRemoveMessages = opts.mayRemoveMessages || true;
+    this.mayCreateChild = opts.mayCreateChild || true;
+    this.mayRenameMailbox = opts.mayRenameMailbox || true;
+    this.mayDeleteMailbox = opts.mayDeleteMailbox || true;
+    this.totalMessages = opts.totalMessages || 0;
+    this.unreadMessages = opts.unreadMessages || 0;
+    this.totalThreads = opts.totalThreads || 0;
+    this.unreadThreads = opts.unreadThreads || 0;
 };
 
 models.Thread = function (opts) {

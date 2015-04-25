@@ -25,44 +25,44 @@ describe("A mailbox object", function() {
         expect(mailbox.mustBeOnlyMailbox).toBeDefined();
     });
 
-    it("has the property mayReadMessageList", function() {
-        expect(mailbox.mayReadMessageList).toBeDefined();
+    it("has the property mayReadMessageList default to true", function() {
+        expect(mailbox.mayReadMessageList).toBe(true);
     });
 
-    it("has the property mayAddMessages", function() {
-        expect(mailbox.mayAddMessages).toBeDefined();
+    it("has the property mayAddMessages default to true", function() {
+        expect(mailbox.mayAddMessages).toBe(true);
     });
 
-    it("has the property mayRemoveMessages", function() {
-        expect(mailbox.mayRemoveMessages).toBeDefined();
+    it("has the property mayRemoveMessages default to true", function() {
+        expect(mailbox.mayRemoveMessages).toBe(true);
     });
 
-    it("has the property mayCreateChild", function() {
-        expect(mailbox.mayCreateChild).toBeDefined();
+    it("has the property mayCreateChild default to true", function() {
+        expect(mailbox.mayCreateChild).toBe(true);
     });
 
-    it("has the property mayRenameMailbox", function() {
-        expect(mailbox.mayRenameMailbox).toBeDefined();
+    it("has the property mayRenameMailbox default to true", function() {
+        expect(mailbox.mayRenameMailbox).toBe(true);
     });
 
-    it("has the property mayDeleteMailbox", function() {
-        expect(mailbox.mayDeleteMailbox).toBeDefined();
+    it("has the property mayDeleteMailbox default to true", function() {
+        expect(mailbox.mayDeleteMailbox).toBe(true);
     });
 
-    it("has the property totalMessages", function() {
-        expect(mailbox.totalMessages).toBeDefined();
+    it("has the property totalMessages default to 0", function() {
+        expect(mailbox.totalMessages).toEqual(0);
     });
 
-    it("has the property unreadMessages", function() {
-        expect(mailbox.unreadMessages).toBeDefined();
+    it("has the property unreadMessages default to 0", function() {
+        expect(mailbox.unreadMessages).toEqual(0);
     });
 
-    it("has the property totalThreads", function() {
-        expect(mailbox.totalThreads).toBeDefined();
+    it("has the property totalThreads default to 0", function() {
+        expect(mailbox.totalThreads).toEqual(0);
     });
 
-    it("has the property unreadThreads", function() {
-        expect(mailbox.unreadThreads).toBeDefined();
+    it("has the property unreadThreads default to 0", function() {
+        expect(mailbox.unreadThreads).toEqual(0);
     });
 
 });
