@@ -3,6 +3,7 @@ var _ = require('lodash');
 
 describe("setMailboxes method", function () {
 
+    var callId = "#1";
     var args = {
         accountId: "",
         ifInState: "",
@@ -13,9 +14,12 @@ describe("setMailboxes method", function () {
 
     describe("createMailbox method", function () {
 
+        var res = [];
+
         beforeEach(function () {
+            res = [];
             // Valid mailbox object
-            args.create['mailbox'] = {
+            args.create.mailbox = {
                 id: "",
                 parentId: null,
                 role: null,
@@ -27,79 +31,101 @@ describe("setMailboxes method", function () {
             };
         });
 
-        it("should create a mailbox", function () {
-            var res = db.setMailboxes(args);
-            console.log(JSON.stringify(res));
-            expect(_.keys(res.created).length).toBeGreaterThan(0);
-            expect(_.keys(res.notCreated).length).toEqual(0);
+        it("should create a mailbox", function (done) {
+            db.setMailboxes(res, args, callId).then(function () {
+                expect(_.keys(res[0][1].created).length).toBeGreaterThan(0);
+                expect(_.keys(res[0][1].notCreated).length).toEqual(0);
+                done();
+            });
         });
 
-        it("should have 'id' and 'mustBeOnlyMailbox' property", function () {
-            var res = db.setMailboxes(args);
-            expect(res.created.mailbox.id).toBeDefined();
-            expect(res.created.mailbox.mustBeOnlyMailbox).toBeDefined();
+        it("should have 'id' and 'mustBeOnlyMailbox' property", function (done) {
+            db.setMailboxes(res, args, callId).then(function () {
+                expect(res[0][1].created.mailbox.id).toBeDefined();
+                expect(res[0][1].created.mailbox.mustBeOnlyMailbox).toBeDefined();
+                done();
+            });
         });
 
-        it("should not create a mailbox if id is present", function () {
+        it("should not create a mailbox if id is present", function (done) {
             args.create.mailbox.id = "testId";
-            var res = db.setMailboxes(args);
-            expect(_.keys(res.notCreated).length).toBeGreaterThan(0);
+            db.setMailboxes(res, args, callId).then(function () {
+                expect(_.keys(res[0][1].notCreated).length).toBeGreaterThan(0);
+                done();
+            });
         });
 
-        it("should not create a mailbox if parentId is not valid", function () {
+        it("should not create a mailbox if parentId is not valid", function (done) {
             args.create.mailbox.parentId = "notValid";
-            var res = db.setMailboxes(args);
-            expect(_.keys(res.notCreated).length).toBeGreaterThan(0);
+            db.setMailboxes(res, args, callId).then(function () {
+                expect(_.keys(res[0][1].notCreated).length).toBeGreaterThan(0);
+                done();
+            });
         });
 
-        it("should not create a mailbox if role is not valid", function () {
+        it("should not create a mailbox if role is not valid", function (done) {
             args.create.mailbox.role = "notValid";
-            var res = db.setMailboxes(args);
-            expect(_.keys(res.notCreated).length).toBeGreaterThan(0);
+            db.setMailboxes(res, args, callId).then(function () {
+                expect(_.keys(res[0][1].notCreated).length).toBeGreaterThan(0);
+                done();
+            });
         });
 
-        it("should not create a mailbox if mustBeOnlyMailbox is present", function () {
+        it("should not create a mailbox if mustBeOnlyMailbox is present", function (done) {
             args.create.mailbox.mustBeOnlyMailbox = "notValid";
-            var res = db.setMailboxes(args);
-            expect(_.keys(res.notCreated).length).toBeGreaterThan(0);
+            db.setMailboxes(res, args, callId).then(function () {
+                expect(_.keys(res[0][1].notCreated).length).toBeGreaterThan(0);
+                done();
+            });
         });
 
-        it("should not create a mailbox if mayXXX are not valid", function () {
+        it("should not create a mailbox if mayXXX are not valid", function (done) {
             args.create.mailbox.mayReadMessageList = false;
             args.create.mailbox.mayAddMessages = false;
-            var res = db.setMailboxes(args);
-            expect(_.keys(res.notCreated).length).toBeGreaterThan(0);
+            db.setMailboxes(res, args, callId).then(function () {
+                expect(_.keys(res[0][1].notCreated).length).toBeGreaterThan(0);
+                done();
+            });
         });
 
-        it("should not create a mailbox if totalMessages !== 0", function () {
+        it("should not create a mailbox if totalMessages !== 0", function (done) {
             args.create.mailbox.totalMessages = 1;
-            var res = db.setMailboxes(args);
-            expect(_.keys(res.notCreated).length).toBeGreaterThan(0);
+            db.setMailboxes(res, args, callId).then(function () {
+                expect(_.keys(res[0][1].notCreated).length).toBeGreaterThan(0);
+                done();
+            });
         });
 
-        it("should not create a mailbox if unreadMessages !== 0", function () {
+        it("should not create a mailbox if unreadMessages !== 0", function (done) {
             args.create.mailbox.unreadMessages = 1;
-            var res = db.setMailboxes(args);
-            expect(_.keys(res.notCreated).length).toBeGreaterThan(0);
+            db.setMailboxes(res, args, callId).then(function () {
+                expect(_.keys(res[0][1].notCreated).length).toBeGreaterThan(0);
+                done();
+            });
         });
 
-        it("should not create a mailbox if totalThreads !== 0", function () {
+        it("should not create a mailbox if totalThreads !== 0", function (done) {
             args.create.mailbox.totalThreads = 1;
-            var res = db.setMailboxes(args);
-            expect(_.keys(res.notCreated).length).toBeGreaterThan(0);
+            db.setMailboxes(res, args, callId).then(function () {
+                expect(_.keys(res[0][1].notCreated).length).toBeGreaterThan(0);
+                done();
+            });
         });
 
-        it("should not create a mailbox if unreadThreads !== 0", function () {
+        it("should not create a mailbox if unreadThreads !== 0", function (done) {
             args.create.mailbox.unreadThreads = 1;
-            var res = db.setMailboxes(args);
-            expect(_.keys(res.notCreated).length).toBeGreaterThan(0);
+            db.setMailboxes(res, args, callId).then(function () {
+                expect(_.keys(res[0][1].notCreated).length).toBeGreaterThan(0);
+                done();
+            });
         });
 
-        it("should ignore unknown properties", function () {
-            // args.create.mailbox.unknownProperty = "test";
-            // var res = db.setMailboxes(args);
-            // expect(_.keys(res.notCreated).length).toBeGreaterThan(0);
-        });
+        // TODO
+        // it("should ignore unknown properties", function () {
+        //     // args.create.mailbox.unknownProperty = "test";
+        //     // var res = db.setMailboxes(args);
+        //     // expect(_.keys(res.notCreated).length).toBeGreaterThan(0);
+        // });
     });
 
 });

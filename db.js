@@ -1,30 +1,44 @@
+var PouchDB = require('pouchdb');
+var db = new PouchDB('jmap');
+var models = require('./models.js');
+var uuid = require('node-uuid');
+var _ = require('lodash');
+var Promise = require('bluebird');
+PouchDB.replicate('jmap', 'http://localhost:5984/jmap', {live: true});
+
+var methods = function () {};
 // args
 // accountId: String (optional)
 // ifInState: String (optional)
 // create: String[Mailbox] (optional)
 // update: String[Mailbox] (optional)
 // destroy: String[]
-methods.setMailboxes = function (args) {
+methods.setMailboxes = function (results, args, callId) {
+    var responseName = "mailboxesSet";
     var res = {};
+    var promises = [];
 
-    // defaults to primary account, how we do that???
+    // TODO defaults to primary account, how we do that???
     // maybe check tokens, cookies...?
     res.accountId = args.accountId;
+    res.accountId = "test";
 
     if (args.ifInState) {
-        // check state
+        // TODO check state
     }
 
     // create Mailboxes
     if (args.create) {
         res.notCreated = {};
         res.created = {};
-        _.keys(args.create).forEach(function (key) {
-            methods.setMailboxes.createMailbox(res, key, args.create[key]);
+        _.keys(args.create).forEach(function (creationId) {
+            promises.push(methods.setMailboxes.createMailbox(res, creationId, args.create[creationId]));
         });
     }
 
-    return res;
+    return Promise.all(promises).then(function () {
+        results.push([responseName, res, callId]);
+    });
 };
 
 methods.setMailboxes.createMailbox = function (res, creationId, mailbox) {
@@ -45,19 +59,20 @@ methods.setMailboxes.createMailbox = function (res, creationId, mailbox) {
         'totalMessages', 'unreadMessages', 'totalThreads', 'unreadThreads'
     ];
 
-    var validRole = [
+    var validRoles = [
         'inbox', 'archive', 'drafts', 'outbox', 'sent',
         'trash', 'spam', 'templates'
     ];
 
     function isRoleValid(role) {
-        if (role === null || validRole.indexOf(role) !== -1 || _.startsWith("x-")) {
+        if (role === null || validRoles.indexOf(role) !== -1 || _.startsWith("x-")) {
             return true;
         }
         return false;
         // TODO No two mailboxes may have the same role
     }
 
+    // Validate each property
     properties.forEach(function (property) {
         if (property === "id" && mailbox[property]) {
             setError.properties.push("id");
@@ -77,13 +92,24 @@ methods.setMailboxes.createMailbox = function (res, creationId, mailbox) {
 
     if (setError.properties.length !== 0) {
         res.notCreated[creationId] = setError;
+        return Promise.resolve(setError);
     } else {
-        // create mailbox db.put(...)
+        var newMailbox = new models.Mailbox(mailbox);
         var _id = res.accountId + "_mailbox_" + uuid.v1(),
             mustBeOnlyMailbox = true;
-        res.created[creationId] = {
-            id: _id,
-            mustBeOnlyMailbox: mustBeOnlyMailbox
-        };
+        newMailbox._id = _id;
+        newMailbox.mustBeOnlyMailbox = true;
+        return db.put(newMailbox)
+            .then(function () {
+                res.created[creationId] = {
+                    id: _id,
+                    mustBeOnlyMailbox: mustBeOnlyMailbox
+                };
+                return newMailbox;
+            })
+            .catch(function (err) {
+                console.log(err);
+            });
     }
 };
+module.exports = methods;
