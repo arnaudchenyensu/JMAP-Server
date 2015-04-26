@@ -4,31 +4,34 @@ var _ = require('lodash');
 describe("setMailboxes method", function () {
 
     var callId = "#1";
+    var res = [];
     var args = {
-        accountId: "",
+        accountId: "test@test.com",
         ifInState: "",
         create: {},
         update: {},
         destroy: []
     };
 
-    describe("createMailbox method", function () {
+    var validCreateObject = {
+        id: "",
+        parentId: null,
+        role: null,
+        totalMessages: 0,
+        unreadMessages: 0,
+        totalThread: "",
+        unreadThread: ""
+    };
 
-        var res = [];
+    var validUpdateObject = {
+        name: "The new name"
+    };
+
+    describe("createMailbox method", function () {
 
         beforeEach(function () {
             res = [];
-            // Valid mailbox object
-            args.create.mailbox = {
-                id: "",
-                parentId: null,
-                role: null,
-                mayXXX: "",
-                totalMessages: 0,
-                unreadMessages: 0,
-                totalThread: "",
-                unreadThread: ""
-            };
+            args.create.mailbox = _.clone(validCreateObject);
         });
 
         it("should create a mailbox", function (done) {

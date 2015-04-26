@@ -2,8 +2,16 @@ var models = require('../../models.js');
 
 describe("A mailbox object", function() {
 
-    var opts = {};
-    var mailbox = new models.Mailbox(opts);
+    var opts = {
+        id: "",
+        parentId: null,
+        role: null,
+        totalMessages: 0,
+        unreadMessages: 0,
+        totalThread: "",
+        unreadThread: ""
+    };
+    var mailbox = new models.Mailbox(opts, false);
 
     it("has the property name", function() {
         expect(mailbox.name).toBeDefined();
