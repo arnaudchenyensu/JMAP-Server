@@ -131,4 +131,166 @@ describe("setMailboxes method", function () {
         // });
     });
 
+    describe("updateMailbox method", function () {
+
+        var id;
+
+        beforeEach(function (done) {
+            res = [];
+            args.create.mailbox = _.clone(validCreateObject);
+            db.setMailboxes(res, args, callId).then(function () {
+                id = res[0][1].created.mailbox.id;
+                args.update = {};
+                args.update[id] = _.clone(validUpdateObject);
+                res = [];
+                args.create = {};
+                done();
+            });
+        });
+
+        it("should update a mailbox", function (done) {
+            db.setMailboxes(res, args, callId).then(function () {
+                expect(res[0][1].updated.length).toEqual(1);
+                expect(_.keys(res[0][1].notUpdated).length).toEqual(0);
+                done();
+            });
+        });
+
+        it("should not update a mailbox when name is not valid", function (done) {
+            // TODO set name to a not valid UTF-8 string
+            args.update[id].name = "not valid";
+            db.setMailboxes(res, args, callId).then(function () {
+                expect(res[0][1].updated.length).toEqual(0);
+                expect(_.keys(res[0][1].notUpdated).length).toEqual(1);
+                done();
+            });
+        });
+
+        it("should not update a mailbox when parentId is not valid", function (done) {
+            args.update[id].parentId = "not valid";
+            db.setMailboxes(res, args, callId).then(function () {
+                expect(res[0][1].updated.length).toEqual(0);
+                expect(_.keys(res[0][1].notUpdated).length).toEqual(1);
+                done();
+            });
+        });
+
+        it("should not update a mailbox when id is set", function (done) {
+            args.update[id].id = "something";
+            db.setMailboxes(res, args, callId).then(function () {
+                expect(res[0][1].updated.length).toEqual(0);
+                expect(_.keys(res[0][1].notUpdated).length).toEqual(1);
+                done();
+            });
+        });
+
+        it("should not update a mailbox when role is set", function (done) {
+            args.update[id].role = "something";
+            db.setMailboxes(res, args, callId).then(function () {
+                expect(res[0][1].updated.length).toEqual(0);
+                expect(_.keys(res[0][1].notUpdated).length).toEqual(1);
+                done();
+            });
+        });
+
+        it("should not update a mailbox when mustBeOnlyMailbox is set", function (done) {
+            args.update[id].mustBeOnlyMailbox = "something";
+            db.setMailboxes(res, args, callId).then(function () {
+                expect(res[0][1].updated.length).toEqual(0);
+                expect(_.keys(res[0][1].notUpdated).length).toEqual(1);
+                done();
+            });
+        });
+
+        it("should not update a mailbox when mayReadMessageList is set", function (done) {
+            args.update[id].mayReadMessageList = "something";
+            db.setMailboxes(res, args, callId).then(function () {
+                expect(res[0][1].updated.length).toEqual(0);
+                expect(_.keys(res[0][1].notUpdated).length).toEqual(1);
+                done();
+            });
+        });
+
+        it("should not update a mailbox when mayAddMessages is set", function (done) {
+            args.update[id].mayAddMessages = "something";
+            db.setMailboxes(res, args, callId).then(function () {
+                expect(res[0][1].updated.length).toEqual(0);
+                expect(_.keys(res[0][1].notUpdated).length).toEqual(1);
+                done();
+            });
+        });
+
+        it("should not update a mailbox when mayRemoveMessages is set", function (done) {
+            args.update[id].mayRemoveMessages = "something";
+            db.setMailboxes(res, args, callId).then(function () {
+                expect(res[0][1].updated.length).toEqual(0);
+                expect(_.keys(res[0][1].notUpdated).length).toEqual(1);
+                done();
+            });
+        });
+
+        it("should not update a mailbox when mayCreateChild is set", function (done) {
+            args.update[id].mayCreateChild = "something";
+            db.setMailboxes(res, args, callId).then(function () {
+                expect(res[0][1].updated.length).toEqual(0);
+                expect(_.keys(res[0][1].notUpdated).length).toEqual(1);
+                done();
+            });
+        });
+
+        it("should not update a mailbox when mayRenameMailbox is set", function (done) {
+            args.update[id].mayRenameMailbox = "something";
+            db.setMailboxes(res, args, callId).then(function () {
+                expect(res[0][1].updated.length).toEqual(0);
+                expect(_.keys(res[0][1].notUpdated).length).toEqual(1);
+                done();
+            });
+        });
+
+        it("should not update a mailbox when mayDeleteMailbox is set", function (done) {
+            args.update[id].mayDeleteMailbox = "something";
+            db.setMailboxes(res, args, callId).then(function () {
+                expect(res[0][1].updated.length).toEqual(0);
+                expect(_.keys(res[0][1].notUpdated).length).toEqual(1);
+                done();
+            });
+        });
+
+        it("should not update a mailbox when totalMessages is set", function (done) {
+            args.update[id].totalMessages = "something";
+            db.setMailboxes(res, args, callId).then(function () {
+                expect(res[0][1].updated.length).toEqual(0);
+                expect(_.keys(res[0][1].notUpdated).length).toEqual(1);
+                done();
+            });
+        });
+
+        it("should not update a mailbox when unreadMessages is set", function (done) {
+            args.update[id].unreadMessages = "something";
+            db.setMailboxes(res, args, callId).then(function () {
+                expect(res[0][1].updated.length).toEqual(0);
+                expect(_.keys(res[0][1].notUpdated).length).toEqual(1);
+                done();
+            });
+        });
+
+        it("should not update a mailbox when totalThreads is set", function (done) {
+            args.update[id].totalThreads = "something";
+            db.setMailboxes(res, args, callId).then(function () {
+                expect(res[0][1].updated.length).toEqual(0);
+                expect(_.keys(res[0][1].notUpdated).length).toEqual(1);
+                done();
+            });
+        });
+
+        it("should not update a mailbox when unreadThreads is set", function (done) {
+            args.update[id].unreadThreads = "something";
+            db.setMailboxes(res, args, callId).then(function () {
+                console.log(args);
+                expect(res[0][1].updated.length).toEqual(0);
+                expect(_.keys(res[0][1].notUpdated).length).toEqual(1);
+                done();
+            });
+        });
+    });
 });

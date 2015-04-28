@@ -7,12 +7,29 @@ var Promise = require('bluebird');
 PouchDB.replicate('jmap', 'http://localhost:5984/jmap', {live: true});
 
 var methods = function () {};
-// args
-// accountId: String (optional)
-// ifInState: String (optional)
-// create: String[Mailbox] (optional)
-// update: String[Mailbox] (optional)
-// destroy: String[]
+
+// init design views
+methods.init = function () {
+    db.info().then(function (info) {
+      console.log(info);
+    });
+};
+
+// load some dummy data
+methods.fixtures = function () {
+    // for (var i = 0; i < 10; i++) {
+    //     var name = "Account " + i;
+    //     var account = new models.Account({
+    //         name: name
+    //     });
+    //     account._id = name;
+    //     db.put(account);
+    // }
+    db.allDocs({keys: ["Account 1", "Account 2"]}).then(function (el) {
+        console.log(el);
+    });
+};
+
 methods.setMailboxes = function (results, args, callId) {
     var responseName = "mailboxesSet";
     var res = {};
@@ -56,7 +73,7 @@ methods.setMailboxes.createMailbox = function (res, creationId, mailbox) {
         properties: []
     };
 
-    var newMailbox = new models.Mailbox(mailbox, false);
+    var newMailbox = models.mailbox.create(mailbox);
 
     if (newMailbox.__invalidProperties) {
         setError.properties = newMailbox.__invalidProperties;
@@ -78,4 +95,28 @@ methods.setMailboxes.createMailbox = function (res, creationId, mailbox) {
         });
     }
 };
+
+methods.setMailboxes.updateMailbox = function (res, mailboxId, updatedProperties) {
+    var setError = {
+        type: "invalidProperties",
+        description: undefined,
+        properties: []
+    };
+
+    return db.get(mailboxId).then(function (mailbox) {
+        var updatedMailbox = models.mailbox.update(mailbox, updatedProperties);
+        if (updatedMailbox.__invalidProperties) {
+            setError.properties = updatedMailbox.__invalidProperties;
+            res.notUpdated[mailboxId] = setError;
+            return Promise.resolve(setError);
+        } else {
+            return db.put(mailbox).then(function () {
+                res.updated.push(mailboxId);
+            }).catch(function (err) {
+                console.log(err);
+            });
+        }
+    });
+};
+
 module.exports = methods;
