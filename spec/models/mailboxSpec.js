@@ -11,7 +11,7 @@ describe("A mailbox object", function() {
         totalThread: "",
         unreadThread: ""
     };
-    var mailbox = new models.Mailbox(opts, false);
+    var mailbox = models.mailbox.create(opts);
 
     it("has the property name", function() {
         expect(mailbox.name).toBeDefined();
