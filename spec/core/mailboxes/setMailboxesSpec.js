@@ -1,6 +1,6 @@
-var config = require('../../config.js');
-var core = require('../../core.js');
-var _ = require('lodash');
+var config = require('../../../config.js');
+var core   = require('../../../core.js');
+var _      = require('lodash');
 
 describe("setMailboxes method", function () {
 
@@ -287,7 +287,6 @@ describe("setMailboxes method", function () {
         it("should not update a mailbox when unreadThreads is set", function (done) {
             args.update[id].unreadThreads = "something";
             core.setMailboxes(res, args, callId).then(function () {
-                console.log(args);
                 expect(res[0][1].updated.length).toEqual(0);
                 expect(_.keys(res[0][1].notUpdated).length).toEqual(1);
                 done();
