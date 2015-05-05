@@ -1,5 +1,4 @@
-var db = require('./db.js');
-
+var core = require('./core.js');
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
@@ -16,7 +15,7 @@ app.post('/', function (req, res) {
         var method = message[0],
             args = message[1],
             callId = message[2];
-        promises.push(db[method](results, args, callId));
+        promises.push(core[method](results, args, callId));
     });
 
     Promise.all(promises).then(function () {

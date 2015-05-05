@@ -1,36 +1,11 @@
-var PouchDB = require('pouchdb');
-var db = new PouchDB('jmap');
-var models = require('./models.js');
-var uuid = require('node-uuid');
-var _ = require('lodash');
+var config  = require('../../config.js');
+var db      = config.db;
+var models  = require('../../models.js');
 var Promise = require('bluebird');
-PouchDB.replicate('jmap', 'http://localhost:5984/jmap', {live: true});
+var _       = require('lodash');
+var uuid    = require('node-uuid');
 
-var methods = function () {};
-
-// init design views
-methods.init = function () {
-    db.info().then(function (info) {
-      console.log(info);
-    });
-};
-
-// load some dummy data
-methods.fixtures = function () {
-    // for (var i = 0; i < 10; i++) {
-    //     var name = "Account " + i;
-    //     var account = new models.Account({
-    //         name: name
-    //     });
-    //     account._id = name;
-    //     db.put(account);
-    // }
-    db.allDocs({keys: ["Account 1", "Account 2"]}).then(function (el) {
-        console.log(el);
-    });
-};
-
-methods.setMailboxes = function (results, args, callId) {
+var setMailboxes = function (results, args, callId) {
     var responseName = "mailboxesSet";
     var res = {};
     var promises = [];
@@ -48,7 +23,7 @@ methods.setMailboxes = function (results, args, callId) {
         res.notCreated = {};
         res.created = {};
         _.keys(args.create).forEach(function (creationId) {
-            promises.push(methods.setMailboxes.createMailbox(res, creationId, args.create[creationId]));
+            promises.push(createMailbox(res, creationId, args.create[creationId]));
         });
     }
 
@@ -57,7 +32,16 @@ methods.setMailboxes = function (results, args, callId) {
         res.notUpdated = {};
         res.updated = [];
         _.keys(args.update).forEach(function (mailboxId) {
-            promises.push(methods.setMailboxes.updateMailbox(res, mailboxId, args.update[mailboxId]));
+            promises.push(updateMailbox(res, mailboxId, args.update[mailboxId]));
+        });
+    }
+
+    // destroy Mailboxes
+    if (args.destroy) {
+        res.notDestroyed = {};
+        res.destroyed = {};
+        args.destroy.forEach(function (mailboxId) {
+            promises.push(destroyMailbox(res, mailboxId));
         });
     }
 
@@ -66,7 +50,7 @@ methods.setMailboxes = function (results, args, callId) {
     });
 };
 
-methods.setMailboxes.createMailbox = function (res, creationId, mailbox) {
+var createMailbox = function (res, creationId, mailbox) {
     var setError = {
         type: "invalidProperties",
         description: undefined,
@@ -96,13 +80,14 @@ methods.setMailboxes.createMailbox = function (res, creationId, mailbox) {
     }
 };
 
-methods.setMailboxes.updateMailbox = function (res, mailboxId, updatedProperties) {
+var updateMailbox = function (res, mailboxId, updatedProperties) {
     var setError = {
         type: "invalidProperties",
         description: undefined,
         properties: []
     };
 
+    // TODO notFound error for the id
     return db.get(mailboxId).then(function (mailbox) {
         var updatedMailbox = models.mailbox.update(mailbox, updatedProperties);
         if (updatedMailbox.__invalidProperties) {
@@ -119,4 +104,8 @@ methods.setMailboxes.updateMailbox = function (res, mailboxId, updatedProperties
     });
 };
 
-module.exports = methods;
+var destroyMailbox = function (res, mailboxId) {
+    // TODO
+};
+
+module.exports = setMailboxes;

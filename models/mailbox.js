@@ -124,4 +124,8 @@ mailbox.update = function (mailbox, updatedProperties) {
     }
 };
 
+mailbox.destroy = function (mailboxId) {
+
+};
+
 module.exports = mailbox;

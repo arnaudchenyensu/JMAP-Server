@@ -1,4 +1,5 @@
-var db = require('../../db.js');
+var config = require('../../config.js');
+var core = require('../../core.js');
 var _ = require('lodash');
 
 describe("setMailboxes method", function () {
@@ -35,7 +36,7 @@ describe("setMailboxes method", function () {
         });
 
         it("should create a mailbox", function (done) {
-            db.setMailboxes(res, args, callId).then(function () {
+            core.setMailboxes(res, args, callId).then(function () {
                 expect(_.keys(res[0][1].created).length).toBeGreaterThan(0);
                 expect(_.keys(res[0][1].notCreated).length).toEqual(0);
                 done();
@@ -43,7 +44,7 @@ describe("setMailboxes method", function () {
         });
 
         it("should have 'id' and 'mustBeOnlyMailbox' property", function (done) {
-            db.setMailboxes(res, args, callId).then(function () {
+            core.setMailboxes(res, args, callId).then(function () {
                 expect(res[0][1].created.mailbox.id).toBeDefined();
                 expect(res[0][1].created.mailbox.mustBeOnlyMailbox).toBeDefined();
                 done();
@@ -52,7 +53,7 @@ describe("setMailboxes method", function () {
 
         it("should not create a mailbox if id is present", function (done) {
             args.create.mailbox.id = "testId";
-            db.setMailboxes(res, args, callId).then(function () {
+            core.setMailboxes(res, args, callId).then(function () {
                 expect(_.keys(res[0][1].notCreated).length).toBeGreaterThan(0);
                 done();
             });
@@ -60,7 +61,7 @@ describe("setMailboxes method", function () {
 
         it("should not create a mailbox if parentId is not valid", function (done) {
             args.create.mailbox.parentId = "notValid";
-            db.setMailboxes(res, args, callId).then(function () {
+            core.setMailboxes(res, args, callId).then(function () {
                 expect(_.keys(res[0][1].notCreated).length).toBeGreaterThan(0);
                 done();
             });
@@ -68,7 +69,7 @@ describe("setMailboxes method", function () {
 
         it("should not create a mailbox if role is not valid", function (done) {
             args.create.mailbox.role = "notValid";
-            db.setMailboxes(res, args, callId).then(function () {
+            core.setMailboxes(res, args, callId).then(function () {
                 expect(_.keys(res[0][1].notCreated).length).toBeGreaterThan(0);
                 done();
             });
@@ -76,7 +77,7 @@ describe("setMailboxes method", function () {
 
         it("should not create a mailbox if mustBeOnlyMailbox is present", function (done) {
             args.create.mailbox.mustBeOnlyMailbox = "notValid";
-            db.setMailboxes(res, args, callId).then(function () {
+            core.setMailboxes(res, args, callId).then(function () {
                 expect(_.keys(res[0][1].notCreated).length).toBeGreaterThan(0);
                 done();
             });
@@ -85,7 +86,7 @@ describe("setMailboxes method", function () {
         it("should not create a mailbox if mayXXX are not valid", function (done) {
             args.create.mailbox.mayReadMessageList = false;
             args.create.mailbox.mayAddMessages = false;
-            db.setMailboxes(res, args, callId).then(function () {
+            core.setMailboxes(res, args, callId).then(function () {
                 expect(_.keys(res[0][1].notCreated).length).toBeGreaterThan(0);
                 done();
             });
@@ -93,7 +94,7 @@ describe("setMailboxes method", function () {
 
         it("should not create a mailbox if totalMessages !== 0", function (done) {
             args.create.mailbox.totalMessages = 1;
-            db.setMailboxes(res, args, callId).then(function () {
+            core.setMailboxes(res, args, callId).then(function () {
                 expect(_.keys(res[0][1].notCreated).length).toBeGreaterThan(0);
                 done();
             });
@@ -101,7 +102,7 @@ describe("setMailboxes method", function () {
 
         it("should not create a mailbox if unreadMessages !== 0", function (done) {
             args.create.mailbox.unreadMessages = 1;
-            db.setMailboxes(res, args, callId).then(function () {
+            core.setMailboxes(res, args, callId).then(function () {
                 expect(_.keys(res[0][1].notCreated).length).toBeGreaterThan(0);
                 done();
             });
@@ -109,7 +110,7 @@ describe("setMailboxes method", function () {
 
         it("should not create a mailbox if totalThreads !== 0", function (done) {
             args.create.mailbox.totalThreads = 1;
-            db.setMailboxes(res, args, callId).then(function () {
+            core.setMailboxes(res, args, callId).then(function () {
                 expect(_.keys(res[0][1].notCreated).length).toBeGreaterThan(0);
                 done();
             });
@@ -117,7 +118,7 @@ describe("setMailboxes method", function () {
 
         it("should not create a mailbox if unreadThreads !== 0", function (done) {
             args.create.mailbox.unreadThreads = 1;
-            db.setMailboxes(res, args, callId).then(function () {
+            core.setMailboxes(res, args, callId).then(function () {
                 expect(_.keys(res[0][1].notCreated).length).toBeGreaterThan(0);
                 done();
             });
@@ -126,7 +127,7 @@ describe("setMailboxes method", function () {
         // TODO
         // it("should ignore unknown properties", function () {
         //     // args.create.mailbox.unknownProperty = "test";
-        //     // var res = db.setMailboxes(args);
+        //     // var res = core.setMailboxes(args);
         //     // expect(_.keys(res.notCreated).length).toBeGreaterThan(0);
         // });
     });
@@ -138,7 +139,7 @@ describe("setMailboxes method", function () {
         beforeEach(function (done) {
             res = [];
             args.create.mailbox = _.clone(validCreateObject);
-            db.setMailboxes(res, args, callId).then(function () {
+            core.setMailboxes(res, args, callId).then(function () {
                 id = res[0][1].created.mailbox.id;
                 args.update = {};
                 args.update[id] = _.clone(validUpdateObject);
@@ -149,7 +150,7 @@ describe("setMailboxes method", function () {
         });
 
         it("should update a mailbox", function (done) {
-            db.setMailboxes(res, args, callId).then(function () {
+            core.setMailboxes(res, args, callId).then(function () {
                 expect(res[0][1].updated.length).toEqual(1);
                 expect(_.keys(res[0][1].notUpdated).length).toEqual(0);
                 done();
@@ -159,7 +160,7 @@ describe("setMailboxes method", function () {
         it("should not update a mailbox when name is not valid", function (done) {
             // TODO set name to a not valid UTF-8 string
             args.update[id].name = "not valid";
-            db.setMailboxes(res, args, callId).then(function () {
+            core.setMailboxes(res, args, callId).then(function () {
                 expect(res[0][1].updated.length).toEqual(0);
                 expect(_.keys(res[0][1].notUpdated).length).toEqual(1);
                 done();
@@ -168,7 +169,7 @@ describe("setMailboxes method", function () {
 
         it("should not update a mailbox when parentId is not valid", function (done) {
             args.update[id].parentId = "not valid";
-            db.setMailboxes(res, args, callId).then(function () {
+            core.setMailboxes(res, args, callId).then(function () {
                 expect(res[0][1].updated.length).toEqual(0);
                 expect(_.keys(res[0][1].notUpdated).length).toEqual(1);
                 done();
@@ -177,7 +178,7 @@ describe("setMailboxes method", function () {
 
         it("should not update a mailbox when id is set", function (done) {
             args.update[id].id = "something";
-            db.setMailboxes(res, args, callId).then(function () {
+            core.setMailboxes(res, args, callId).then(function () {
                 expect(res[0][1].updated.length).toEqual(0);
                 expect(_.keys(res[0][1].notUpdated).length).toEqual(1);
                 done();
@@ -186,7 +187,7 @@ describe("setMailboxes method", function () {
 
         it("should not update a mailbox when role is set", function (done) {
             args.update[id].role = "something";
-            db.setMailboxes(res, args, callId).then(function () {
+            core.setMailboxes(res, args, callId).then(function () {
                 expect(res[0][1].updated.length).toEqual(0);
                 expect(_.keys(res[0][1].notUpdated).length).toEqual(1);
                 done();
@@ -195,7 +196,7 @@ describe("setMailboxes method", function () {
 
         it("should not update a mailbox when mustBeOnlyMailbox is set", function (done) {
             args.update[id].mustBeOnlyMailbox = "something";
-            db.setMailboxes(res, args, callId).then(function () {
+            core.setMailboxes(res, args, callId).then(function () {
                 expect(res[0][1].updated.length).toEqual(0);
                 expect(_.keys(res[0][1].notUpdated).length).toEqual(1);
                 done();
@@ -204,7 +205,7 @@ describe("setMailboxes method", function () {
 
         it("should not update a mailbox when mayReadMessageList is set", function (done) {
             args.update[id].mayReadMessageList = "something";
-            db.setMailboxes(res, args, callId).then(function () {
+            core.setMailboxes(res, args, callId).then(function () {
                 expect(res[0][1].updated.length).toEqual(0);
                 expect(_.keys(res[0][1].notUpdated).length).toEqual(1);
                 done();
@@ -213,7 +214,7 @@ describe("setMailboxes method", function () {
 
         it("should not update a mailbox when mayAddMessages is set", function (done) {
             args.update[id].mayAddMessages = "something";
-            db.setMailboxes(res, args, callId).then(function () {
+            core.setMailboxes(res, args, callId).then(function () {
                 expect(res[0][1].updated.length).toEqual(0);
                 expect(_.keys(res[0][1].notUpdated).length).toEqual(1);
                 done();
@@ -222,7 +223,7 @@ describe("setMailboxes method", function () {
 
         it("should not update a mailbox when mayRemoveMessages is set", function (done) {
             args.update[id].mayRemoveMessages = "something";
-            db.setMailboxes(res, args, callId).then(function () {
+            core.setMailboxes(res, args, callId).then(function () {
                 expect(res[0][1].updated.length).toEqual(0);
                 expect(_.keys(res[0][1].notUpdated).length).toEqual(1);
                 done();
@@ -231,7 +232,7 @@ describe("setMailboxes method", function () {
 
         it("should not update a mailbox when mayCreateChild is set", function (done) {
             args.update[id].mayCreateChild = "something";
-            db.setMailboxes(res, args, callId).then(function () {
+            core.setMailboxes(res, args, callId).then(function () {
                 expect(res[0][1].updated.length).toEqual(0);
                 expect(_.keys(res[0][1].notUpdated).length).toEqual(1);
                 done();
@@ -240,7 +241,7 @@ describe("setMailboxes method", function () {
 
         it("should not update a mailbox when mayRenameMailbox is set", function (done) {
             args.update[id].mayRenameMailbox = "something";
-            db.setMailboxes(res, args, callId).then(function () {
+            core.setMailboxes(res, args, callId).then(function () {
                 expect(res[0][1].updated.length).toEqual(0);
                 expect(_.keys(res[0][1].notUpdated).length).toEqual(1);
                 done();
@@ -249,7 +250,7 @@ describe("setMailboxes method", function () {
 
         it("should not update a mailbox when mayDeleteMailbox is set", function (done) {
             args.update[id].mayDeleteMailbox = "something";
-            db.setMailboxes(res, args, callId).then(function () {
+            core.setMailboxes(res, args, callId).then(function () {
                 expect(res[0][1].updated.length).toEqual(0);
                 expect(_.keys(res[0][1].notUpdated).length).toEqual(1);
                 done();
@@ -258,7 +259,7 @@ describe("setMailboxes method", function () {
 
         it("should not update a mailbox when totalMessages is set", function (done) {
             args.update[id].totalMessages = "something";
-            db.setMailboxes(res, args, callId).then(function () {
+            core.setMailboxes(res, args, callId).then(function () {
                 expect(res[0][1].updated.length).toEqual(0);
                 expect(_.keys(res[0][1].notUpdated).length).toEqual(1);
                 done();
@@ -267,7 +268,7 @@ describe("setMailboxes method", function () {
 
         it("should not update a mailbox when unreadMessages is set", function (done) {
             args.update[id].unreadMessages = "something";
-            db.setMailboxes(res, args, callId).then(function () {
+            core.setMailboxes(res, args, callId).then(function () {
                 expect(res[0][1].updated.length).toEqual(0);
                 expect(_.keys(res[0][1].notUpdated).length).toEqual(1);
                 done();
@@ -276,7 +277,7 @@ describe("setMailboxes method", function () {
 
         it("should not update a mailbox when totalThreads is set", function (done) {
             args.update[id].totalThreads = "something";
-            db.setMailboxes(res, args, callId).then(function () {
+            core.setMailboxes(res, args, callId).then(function () {
                 expect(res[0][1].updated.length).toEqual(0);
                 expect(_.keys(res[0][1].notUpdated).length).toEqual(1);
                 done();
@@ -285,7 +286,7 @@ describe("setMailboxes method", function () {
 
         it("should not update a mailbox when unreadThreads is set", function (done) {
             args.update[id].unreadThreads = "something";
-            db.setMailboxes(res, args, callId).then(function () {
+            core.setMailboxes(res, args, callId).then(function () {
                 console.log(args);
                 expect(res[0][1].updated.length).toEqual(0);
                 expect(_.keys(res[0][1].notUpdated).length).toEqual(1);
