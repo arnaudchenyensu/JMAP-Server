@@ -1,0 +1,11 @@
+[
+    [
+        "getMailboxes",
+        {
+            "accountId": "test@test.com",
+            "ids": null,
+            "properties": []
+        },
+        "#1"
+    ]
+]

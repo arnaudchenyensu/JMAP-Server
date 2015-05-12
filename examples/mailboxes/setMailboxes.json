@@ -1,0 +1,33 @@
+[
+    [
+        "setMailboxes",
+        {
+            "accountId": "test@test.com",
+            "create": {
+                "mailbox": {
+                    "id": "",
+                    "name": "test 1",
+                    "parentId": null,
+                    "role": null,
+                    "mayXXX": "",
+                    "totalMessages": 0,
+                    "unreadMessages": 0,
+                    "totalThread": "",
+                    "unreadThread": ""
+                },
+                "mailbox2": {
+                    "id": "",
+                    "name": "test 2",
+                    "parentId": null,
+                    "role": null,
+                    "mayXXX": "",
+                    "totalMessages": 0,
+                    "unreadMessages": 0,
+                    "totalThread": "",
+                    "unreadThread": ""
+                }
+            }
+        },
+        "#1"
+    ]
+]
