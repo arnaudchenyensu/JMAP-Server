@@ -2,11 +2,11 @@
     [
         "setMailboxes",
         {
-            "accountId": "test@test.com",
+            "accountId": "examples@examples.com",
             "create": {
                 "mailbox": {
                     "id": "",
-                    "name": "test 1",
+                    "name": "example 1",
                     "parentId": null,
                     "role": null,
                     "mayXXX": "",
@@ -17,7 +17,7 @@
                 },
                 "mailbox2": {
                     "id": "",
-                    "name": "test 2",
+                    "name": "example 2",
                     "parentId": null,
                     "role": null,
                     "mayXXX": "",
