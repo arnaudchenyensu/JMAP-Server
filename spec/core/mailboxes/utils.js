@@ -1,7 +1,8 @@
-var config = require('../../../config.js');
-var db     = config.db;
-var core   = require('../../../core.js');
-var _      = require('lodash');
+var config  = require('../../../config.js');
+var db      = config.db;
+var core    = require('../../../core.js');
+var models  = require('../../../models.js');
+var _       = require('lodash');
 var Promise = require('bluebird');
 
 var utils = {};
@@ -25,9 +26,6 @@ var validCreateObject = {
     unreadThread: ""
 };
 
-// List of ids created, use for cleanup
-var created = [];
-
 utils.createMailboxes = function (number) {
     var res = [];
     for (var i = 0; i < number; i++) {
@@ -38,20 +36,26 @@ utils.createMailboxes = function (number) {
         _.keys(res[0][1].created).forEach(function (key) {
             var id = res[0][1].created[key].id;
             ids.push(id);
-            created.push(id);
         });
         return ids;
     });
 };
 
-utils.cleanup = function () {
+utils.cleanup = function (accountId) {
     var promises = [];
-    created.forEach(function (id) {
-        promises.push(db.get(id).then(function (doc) {
-            return db.remove(doc);
-        }));
+    var opts = {
+        startkey: models.mailbox.startkey(accountId),
+        endkey: models.mailbox.endkey(accountId)
+    };
+
+    return db.allDocs(opts).then(function (mailboxes) {
+        mailboxes.rows.forEach(function (mailbox) {
+            promises.push(db.remove({'_id': mailbox.id, '_rev': mailbox.value.rev}));
+        });
+        return Promise.all(promises);
+    }).catch(function (err) {
+        console.log(err);
     });
-    return Promise.all(promises);
 };
 
 module.exports = utils;
