@@ -1,4 +1,5 @@
-var _ = require('lodash');
+var _       = require('lodash');
+var uuid    = require('node-uuid');
 var mailbox = {};
 
 // immutables or can only be updated by the server
@@ -28,6 +29,18 @@ function isRoleValid(role) {
     return false;
     // TODO No two mailboxes may have the same role
 }
+
+mailbox.id = function (accountId) {
+    return accountId + '_mailbox_' + uuid.v1();
+};
+
+mailbox.startkey = function (accountId) {
+    return accountId + '_mailbox_';
+};
+
+mailbox.endkey = function (accountId) {
+    return accountId + '_mailbox_\uffff';
+};
 
 mailbox.create = function (opts) {
     var invalidProperties = [];
