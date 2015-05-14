@@ -1,6 +1,7 @@
 var config = require('../../../config.js');
 var core   = require('../../../core.js');
 var _      = require('lodash');
+var utils  = require('./utils.js');
 
 describe("setMailboxes method", function () {
 
@@ -27,6 +28,14 @@ describe("setMailboxes method", function () {
     var validUpdateObject = {
         name: "The new name"
     };
+
+    afterAll(function (done) {
+        utils.cleanup(args.accountId).then(function () {
+            done();
+        }).catch(function (err) {
+            console.log(err);
+        });
+    });
 
     describe("createMailbox method", function () {
 
