@@ -1,4 +1,3 @@
-var _ = require('lodash');
 var models = function () {};
 
 models.Account = function (opts) {

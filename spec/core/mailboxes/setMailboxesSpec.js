@@ -1,4 +1,3 @@
-var config = require('../../../config.js');
 var core   = require('../../../core.js');
 var _      = require('lodash');
 var utils  = require('./utils.js');

@@ -1,9 +1,6 @@
 var config  = require('./config.js');
 var db      = config.db;
 var models  = require('./models.js');
-var uuid    = require('node-uuid');
-var _       = require('lodash');
-var Promise = require('bluebird');
 
 var core = function () {};
 

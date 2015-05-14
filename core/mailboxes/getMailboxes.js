@@ -1,4 +1,3 @@
-var _      = require('lodash');
 var utils  = require('../utils.js');
 
 var getMailboxes = function (results, args, callId) {
