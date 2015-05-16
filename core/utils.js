@@ -5,10 +5,6 @@ var Promise = require('bluebird');
 
 var utils = {};
 
-utils.getAccountId = function () {
-
-};
-
 utils.get = function (response, args, startkey, endkey) {
     // TODO manage state of the server
     response.state = "stateOfTheServer";
