@@ -1,5 +1,6 @@
 var _       = require('lodash');
 var uuid    = require('node-uuid');
+var utils   = require('../utils.js');
 var mailbox = {};
 
 // immutables or can only be updated by the server
@@ -42,6 +43,150 @@ mailbox.endkey = function (accountId) {
     return accountId + '_mailbox_\uffff';
 };
 
+mailbox.properties = {
+    id: {
+        types: ["string"],
+        defaultValue: null
+    },
+    name: {
+        types: ["string"],
+        defaultValue: null
+    },
+    parentId: {
+        types: ["string", "null"],
+        defaultValue: null
+    },
+    role: {
+        types: ["string", "null"],
+        defaultValue: null
+    },
+    precedence: {
+        types: ["number"],
+        defaultValue: null
+    },
+    mustBeOnlyMailbox: {
+        types: ["boolean"],
+        defaultValue: true
+    },
+    mayReadMessageList: {
+        types: ["boolean"],
+        defaultValue: true,
+    },
+    mayAddMessages: {
+        types: ["boolean"],
+        defaultValue: true,
+    },
+    mayRemoveMessages: {
+        types: ["boolean"],
+        defaultValue: true,
+    },
+    mayCreateChild: {
+        types: ["boolean"],
+        defaultValue: true,
+    },
+    mayRenameMailbox: {
+        types: ["boolean"],
+        defaultValue: true,
+    },
+    mayDeleteMailbox: {
+        types: ["boolean"],
+        defaultValue: true,
+    },
+    totalMessages: {
+        types: ["number"],
+        defaultValue: 0
+    },
+    unreadMessages: {
+        types: ["number"],
+        defaultValue: 0
+    },
+    totalThreads: {
+        types: ["number"],
+        defaultValue: 0
+    },
+    unreadThreads: {
+        types: ["number"],
+        defaultValue: 0
+    }
+};
+
+mailbox.methods = {
+    getMailboxes: {
+        func: utils.get,
+        request: {
+            accountId: {
+                types: ["string", "null"],
+                defaultValue: null,
+                before: function (req, opts) {
+                    // if req.accountId == null, the primary account is used
+                    opts.startkey = req.accountId + '_mailbox_';
+                    opts.endkey   = req.accountId + '_mailbox_\uffff';
+                }
+            },
+            ids: {
+                types: ["array", "null"],
+                defaultValue: null,
+                before: function (req, opts) {
+                    if (req.ids) {
+                        opts.keys = req.ids;
+                        delete opts.startkey;
+                        delete opts.endkey;
+                    }
+                }
+            },
+            properties: {
+                types: ["array", "null"],
+                defaultValue: null
+            }
+        },
+        response: {
+            accountId: {
+                types: ["string"],
+                defaultValue: "defaultAccountId"
+            },
+            state: {
+                types: ["string"],
+                defaultValue: "stateOfTheServer"
+            },
+            list: {
+                types: ["array"],
+                defaultValue: [],
+                after: function (req, response, result) {
+                    if (!response.list)
+                        response.list = [];
+                    if (req.properties !== null) {
+                        req.properties.push('id');
+                        _.forEach(result.rows, function (row) {
+                            response.list.push(_.pick(row.doc, req.properties));
+                        });
+                    } else {
+                        _.forEach(result.rows, function (row) {
+                            response.list.push(row.doc);
+                        });
+                    }
+                }
+            },
+            notFound: {
+                types: ["array"],
+                defaultValue: null,
+                after: function (req, response, result) {
+                    response.notFound = _.pluck(_.filter(result.errors, {'error': 'not_found'}), 'key');
+                    if (response.notFound.length === 0)
+                        response.notFound = null;
+                }
+            }
+        },
+        responseName: "mailboxes"
+    },
+    getMailboxUpdates: {
+        method: "getFooUpdates",
+        responseName: "mailboxUpdates"
+    },
+    setMailboxes: {
+        method: "setFoos",
+        responseName: "mailboxesSet"
+    }
+};
 mailbox.create = function (opts) {
     var invalidProperties = [];
     var properties = _.keys(opts);

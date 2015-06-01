@@ -3,7 +3,7 @@ var models = require('../../models.js');
 describe("An account object", function() {
 
     var opts = {};
-    var account = new models.Account(opts);
+    var account = models.account.create(opts);
 
     it("has the property name", function() {
         expect(account.name).toBeDefined();

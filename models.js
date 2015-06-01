@@ -1,20 +1,8 @@
 var models = function () {};
 
-models.Account = function (opts) {
-    this.name = opts.name || null;
-    this.isPrimary = opts.isPrimary || null;
-    this.isReadOnly = opts.isReadOnly || null;
-    this.hasMail = opts.hasMail || null;
-    this.hasContacts = opts.hasContacts || null;
-    this.hasCalendars = opts.hasCalendars || null;
-    this.capabilities = opts.capabilities || null;
-};
-
+models.account = require('./models/account.js');
 models.mailbox = require('./models/mailbox.js');
-
-models.Thread = function (opts) {
-    this.messageIds = opts.messageIds || [];
-};
+models.thread  = require('./models/thread.js');
 
 models.Message = function (opts) {
     this.threadId = opts.threadId || null;

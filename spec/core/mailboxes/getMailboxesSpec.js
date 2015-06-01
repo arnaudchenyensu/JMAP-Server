@@ -1,6 +1,7 @@
-var core    = require('../../../core.js');
-var _       = require('lodash');
-var utils = require('./utils.js');
+var core         = require('../../../utils.js');
+var _            = require('lodash');
+var utils        = require('./utils.js');
+var getMailboxes = require('../../../models/mailbox.js').methods.getMailboxes;
 
 describe("getMailboxes method", function () {
 
@@ -29,17 +30,17 @@ describe("getMailboxes method", function () {
     });
 
     afterAll(function (done) {
-        utils.cleanup().then(function () {
+        utils.cleanup(args.accountId).then(function () {
             done();
         });
     });
 
     it("should return a correct response", function (done) {
-        core.getMailboxes(res, args, callId).then(function () {
-            expect(res[0][1].accountId).toBeDefined();
-            expect(res[0][1].state).toBeDefined();
-            expect(res[0][1].list).toBeDefined();
-            expect(res[0][1].notFound).toBeNull();
+        core.executeMethod(getMailboxes, args, callId).then(function (res) {
+            expect(res[1].accountId).toBeDefined();
+            expect(res[1].state).toBeDefined();
+            expect(res[1].list).toBeDefined();
+            expect(res[1].notFound).toBeNull();
             done();
         });
     });
@@ -56,42 +57,43 @@ describe("getMailboxes method", function () {
 
     it("should return only mailboxes specified by ids", function (done) {
         args.ids = [createdMailboxes[0]];
-        core.getMailboxes(res, args, callId).then(function () {
-            expect(res[0][1].list.length).toEqual(1);
+        // console.log(args.ids);
+        core.executeMethod(getMailboxes, args, callId).then(function (res) {
+            expect(res[1].list.length).toEqual(1);
             done();
         });
     });
 
     it("should return all mailboxes if ids is null", function (done) {
         args.ids = null;
-        core.getMailboxes(res, args, callId).then(function () {
-            expect(res[0][1].list.length).toEqual(createdMailboxes.length);
+        core.executeMethod(getMailboxes, args, callId).then(function (res) {
+            expect(res[1].list.length).toEqual(createdMailboxes.length);
             done();
         });
     });
 
     it("should return all mailboxes if ids is omitted", function (done) {
         delete args.ids;
-        core.getMailboxes(res, args, callId).then(function () {
-            expect(res[0][1].list.length).toEqual(createdMailboxes.length);
+        core.executeMethod(getMailboxes, args, callId).then(function (res) {
+            expect(res[1].list.length).toEqual(createdMailboxes.length);
             done();
         });
     });
 
     it("should return res.notFound !== null if some ids were not found", function (done) {
         args.ids = ["falseId"];
-        core.getMailboxes(res, args, callId).then(function () {
-            expect(res[0][1].notFound).not.toBe(null);
-            expect(res[0][1].notFound.length).toBeGreaterThan(0);
-            expect(res[0][1].list.length).toEqual(0);
+        core.executeMethod(getMailboxes, args, callId).then(function (res) {
+            expect(res[1].notFound).not.toBe(null);
+            expect(res[1].notFound.length).toBeGreaterThan(0);
+            expect(res[1].list.length).toEqual(0);
             done();
         });
     });
 
     it("should return only id and properties specified by properties", function (done) {
         args.properties = ['name', 'parentId'];
-        core.getMailboxes(res, args, callId).then(function () {
-            var mailbox = res[0][1].list[0];
+        core.executeMethod(getMailboxes, args, callId).then(function (res) {
+            var mailbox = res[1].list[0];
             expect(mailbox.id).toBeDefined();
             expect(_.keys(mailbox).length).toEqual(3);
             done();
@@ -100,8 +102,8 @@ describe("getMailboxes method", function () {
 
     it("should return all properties if properties is null", function (done) {
         args.properties = null;
-        core.getMailboxes(res, args, callId).then(function () {
-            var mailbox = res[0][1].list[0];
+        core.executeMethod(getMailboxes, args, callId).then(function (res) {
+            var mailbox = res[1].list[0];
             expect(_.keys(mailbox).length).toEqual(16);
             done();
         });
@@ -109,8 +111,8 @@ describe("getMailboxes method", function () {
 
     it("should return all properties if properties is omitted", function (done) {
         delete args.properties;
-        core.getMailboxes(res, args, callId).then(function () {
-            var mailbox = res[0][1].list[0];
+        core.executeMethod(getMailboxes, args, callId).then(function (res) {
+            var mailbox = res[1].list[0];
             expect(_.keys(mailbox).length).toEqual(16);
             done();
         });
@@ -118,8 +120,8 @@ describe("getMailboxes method", function () {
 
     it("should ignore unknown properties", function (done) {
         args.properties = ['unknownProperty'];
-        core.getMailboxes(res, args, callId).then(function () {
-            var mailbox = res[0][1].list[0];
+        core.executeMethod(getMailboxes, args, callId).then(function (res) {
+            var mailbox = res[1].list[0];
             expect(_.keys(mailbox).length).toEqual(1); // id is still return
             done();
         });
