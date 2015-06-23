@@ -1,7 +1,7 @@
-var config  = require('../../../config.js');
+var config  = require('../../config.js');
 var db      = config.db;
-var core    = require('../../../utils.js');
-var models  = require('../../../models.js');
+var core    = require('../../utils.js');
+var models  = require('../../models.js');
 var _       = require('lodash');
 var Promise = require('bluebird');
 

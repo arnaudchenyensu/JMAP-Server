@@ -1,7 +1,7 @@
-var core         = require('../../../utils.js');
+var core         = require('../../utils.js');
 var _            = require('lodash');
 var utils        = require('./utils.js');
-var setMailboxes = require('../../../models/mailbox.js').methods.setMailboxes;
+var setMailboxes = require('../../models/mailbox.js').methods.setMailboxes;
 
 describe("setMailboxes method", function () {
 
