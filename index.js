@@ -21,9 +21,9 @@ app.post('/', function (req, res) {
     req.body.forEach(function (message) {
         // TODO check req.body and message are valid data
         var method = message[0],
-            req = message[1],
+            args = message[1],
             callId = message[2];
-        promises.push(utils.executeMethod(methods[method], req, callId));
+        promises.push(utils.executeMethod(methods[method], args, callId));
     });
 
     Promise.all(promises).then(function (responses) {
