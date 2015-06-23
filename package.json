@@ -32,6 +32,7 @@
     "pouchdb": "^3.4.0"
   },
   "devDependencies": {
+    "docdown": "^0.2.0",
     "jasmine": "^2.2.1"
   }
 }
