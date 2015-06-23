@@ -57,7 +57,6 @@ describe("getMailboxes method", function () {
 
     it("should return only mailboxes specified by ids", function (done) {
         args.ids = [createdMailboxes[0]];
-        // console.log(args.ids);
         core.executeMethod(getMailboxes, args, callId).then(function (res) {
             expect(res[1].list.length).toEqual(1);
             done();

@@ -1,4 +1,3 @@
-var core       = require('./core.js');
 var express    = require('express');
 var app        = express();
 var bodyParser = require('body-parser');
@@ -8,7 +7,7 @@ var _          = require('lodash');
 var utils      = require('./utils');
 
 var methods = {};
-_.forEach(models, function (model, ressourceName) {
+_.forEach(models, function (model) {
     _.forEach(model.methods, function (method, methodName) {
         methods[methodName] = method;
     });

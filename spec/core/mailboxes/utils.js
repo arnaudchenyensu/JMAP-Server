@@ -1,6 +1,6 @@
 var config  = require('../../../config.js');
 var db      = config.db;
-var core    = require('../../../core.js');
+var core    = require('../../../utils.js');
 var models  = require('../../../models.js');
 var _       = require('lodash');
 var Promise = require('bluebird');
@@ -17,24 +17,23 @@ var args = {
 };
 
 var validCreateObject = {
-    id: "",
     parentId: null,
-    role: null,
-    totalMessages: 0,
-    unreadMessages: 0,
-    totalThread: "",
-    unreadThread: ""
+    role: null
 };
 
 utils.createMailboxes = function (number) {
-    var res = [];
+    var opts = {
+        accountId: "test@test.com",
+        create: [],
+        model: models.mailbox
+    };
     for (var i = 0; i < number; i++) {
-        args.create[i] = validCreateObject;
+        opts.create[i] = validCreateObject;
     }
-    return core.setMailboxes(res, args, callId).then(function () {
+    return core.set(opts).then(function (res) {
         var ids = [];
-        _.keys(res[0][1].created).forEach(function (key) {
-            var id = res[0][1].created[key].id;
+        _.keys(res.created).forEach(function (key) {
+            var id = res.created[key].id;
             ids.push(id);
         });
         return ids;

@@ -1,4 +1,4 @@
-var models = function () {};
+var models = {};
 
 models.account = require('./models/account.js');
 models.mailbox = require('./models/mailbox.js');
