@@ -2,19 +2,12 @@
     [
         "getMailboxes",
         {
-            "accountId": "examples@examples.com",
-            "ids": null,
-            "properties": []
+            "accountId": null,
+            "ids": [
+                "test@test.com_mailbox_15c44950-0758-11e5-99f3-2918420e269f"
+            ],
+            "properties": null
         },
         "#1"
-    ],
-    [
-        "getMailboxes",
-        {
-            "accountId": "examples@examples.com",
-            "ids": null,
-            "properties": ["name"]
-        },
-        "#2"
     ]
 ]

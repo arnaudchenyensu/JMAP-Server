@@ -5,26 +5,18 @@
             "accountId": "examples@examples.com",
             "create": {
                 "mailbox": {
-                    "id": "",
                     "name": "example 1",
                     "parentId": null,
                     "role": null,
-                    "mayXXX": "",
-                    "totalMessages": 0,
-                    "unreadMessages": 0,
-                    "totalThread": "",
-                    "unreadThread": ""
+                    "mayXXX": ""
                 },
                 "mailbox2": {
-                    "id": "",
                     "name": "example 2",
                     "parentId": null,
                     "role": null,
                     "mayXXX": "",
-                    "totalMessages": 0,
-                    "unreadMessages": 0,
-                    "totalThread": "",
-                    "unreadThread": ""
+                    "precedence": -10,
+                    "mustBeOnlyMailbox": true
                 }
             }
         },
