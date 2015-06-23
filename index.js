@@ -18,7 +18,7 @@ app.use(bodyParser.json());
 app.post('/', function (req, res) {
     var promises = [];
 
-    req.body.forEach(function (message) {
+    _.forEach(req.body, function (message) {
         // TODO check req.body and message are valid data
         var method = message[0],
             args = message[1],
