@@ -165,9 +165,9 @@ utils.set = function (opts) {
     // destroy Obj
     if (opts.destroy) {
         res.notDestroyed = {};
-        res.destroyed = {};
+        res.destroyed = [];
         _.forEach(opts.destroy, function (objId) {
-            promises.push(utils.destroy(res, objId, model));
+            promises.push(utils.destroy(res, objId));
         });
     }
 
@@ -342,8 +342,29 @@ utils.update = function (result, objId, updatedProperties, model) {
     }
 };
 
+/**
+ * Destroy a doc.
+ * @param   {Object}   result Result object from utils.set.
+ * @param   {string}   objId  Id of the object in database.
+ * @return  {Promise}         Promise which resolve by the value
+ *                            returns by `db.remove()`.
+ */
 utils.destroy = function (result, objId) {
-    // TODO
+    return db.get(objId).then(function(doc) {
+        return db.remove(doc);
+    }).then(function (res) {
+        if (res.ok) {
+            result.destroyed.push(objId);
+        } else {
+            result.notDestroyed[objId] = {
+                description: res
+            };
+            // TODO - accountNotFound, accountNoMail, ...
+        }
+        return res;
+    }).catch(function (err) {
+        console.log(err);
+    });
 };
 
 /**

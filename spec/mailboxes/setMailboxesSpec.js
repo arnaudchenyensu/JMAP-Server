@@ -1,3 +1,5 @@
+var config       = require('../../config.js');
+var db           = config.db;
 var core         = require('../../utils.js');
 var _            = require('lodash');
 var utils        = require('./utils.js');
@@ -23,6 +25,16 @@ describe("setMailboxes method", function () {
     var validUpdateObject = {
         name: "The new name"
     };
+
+    var createdMailboxes = [];
+
+    beforeAll(function (done) {
+        // create one mailbox to test
+        utils.createMailboxes(1).then(function (ids) {
+            createdMailboxes = ids;
+            done();
+        });
+    });
 
     afterAll(function (done) {
         utils.cleanup(args.accountId).then(function () {
@@ -293,6 +305,26 @@ describe("setMailboxes method", function () {
             core.executeMethod(setMailboxes, args, callId).then(function (res) {
                 expect(res[1].updated.length).toEqual(0);
                 expect(_.keys(res[1].notUpdated).length).toEqual(1);
+                done();
+            });
+        });
+    });
+
+    describe("destroy method", function () {
+
+        beforeEach(function () {
+            res = [];
+            args.update = {};
+        });
+
+        it("should delete the mailbox", function (done) {
+            args.destroy = createdMailboxes;
+            core.executeMethod(setMailboxes, args, callId).then(function (res) {
+                expect(res[1].destroyed[0]).toEqual(createdMailboxes[0]);
+                return db.get(createdMailboxes[0]);
+            }).catch(function (err) {
+                expect(err.error).toBe(true);
+                expect(err.reason).toBe('deleted');
                 done();
             });
         });
