@@ -1,0 +1,11 @@
+[
+    [
+        "getMailboxUpdates",
+        {
+            "accountId": "examples@examples.com",
+            "sinceState": "0",
+            "fetchRecords": true
+        },
+        "#1"
+    ]
+]
