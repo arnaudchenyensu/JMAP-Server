@@ -80,13 +80,13 @@ utils.executeMethod = function (method, req, callId) {
         return Promise.resolve(["error", err, callId]);
 
     // Execute all needed functions before the request in DB
-    var opts = {};
-    _.invoke(method.request, 'before', req, opts);
-    _.invoke(method.response, 'before', req, opts);
+    var opts = {},
+        res = {};
+    _.invoke(method.request, 'before', req, opts, res);
+    _.invoke(method.response, 'before', req, opts, res);
 
     // Execute all needed functions after the request in DB
     return method.func(opts).then(function (result) {
-        var res  = {};
         // Default Value
         _.forEach(method.response, function (val, key) {
             if (res[key] === undefined) {
@@ -95,7 +95,18 @@ utils.executeMethod = function (method, req, callId) {
         });
         _.invoke(method.request, 'after', req, res, result);
         _.invoke(method.response, 'after', req, res, result);
-        return [method.responseName, res, callId];
+
+        /** if an implicit call is made during getFooUpdates */
+        var implicitCall = res._implicitCall;
+        if (implicitCall) {
+            delete res._implicitCall;
+            return implicitCall.then(function (r) {
+                r[2] = callId;
+                return [[method.responseName, res, callId], r];
+            });
+        } else {
+            return [method.responseName, res, callId];
+        }
     });
 };
 
@@ -364,6 +375,18 @@ utils.destroy = function (result, objId) {
         return res;
     }).catch(function (err) {
         console.log(err);
+    });
+};
+
+utils.getUpdates = function (opts) {
+    /** TODO: handle onlyCountsChanged */
+    return db.changes({
+        filter: 'mydesign/getUpdatesFilter',
+        since: opts.sinceState,
+        query_params: {
+            startkey: opts.startkey,
+            _: _
+        }
     });
 };
 

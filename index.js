@@ -27,7 +27,17 @@ app.post('/', function (req, res) {
     });
 
     Promise.all(promises).then(function (responses) {
-        res.json(responses);
+        var r = [];
+        /** flatten responses if an implicit call was made */
+        _.forEach(responses, function (response) {
+            if (_.isArray(response[0])) {
+                r.push(response[0]);
+                r.push(response[1]);
+            } else {
+                r.push(response);
+            }
+        });
+        res.json(r);
     }).catch(function (err) {
         console.log(err);
     });

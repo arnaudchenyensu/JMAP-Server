@@ -211,6 +211,84 @@ mailbox.methods = {
         responseName: "mailboxes"
     },
     getMailboxUpdates: {
+        func: utils.getUpdates,
+        request: {
+            accountId: {
+                types: ["string", "null"],
+                defaultValue: null,
+                before: function (req, opts) {
+                    opts.accountId = req.accountId;
+                    opts.startkey = mailbox.startkey(req.accountId);
+                }
+            },
+            sinceState: {
+                types: ["string"],
+                before: function (req, opts) {
+                    opts.sinceState = req.sinceState;
+                }
+            },
+            fetchRecordProperties: {
+                types: ["array", "null"],
+                defaultValue: null,
+                before: function (req, opts) {
+
+                }
+            },
+            fetchRecords: {
+                types: ["boolean", "null"],
+                defaultValue: null,
+                before: function (req, opts, res) {
+                    if (req.fetchRecords === true) {
+                        var args = {
+                            accountId: opts.accountId,
+                            properties: opts.fetchRecordProperties
+                        };
+                        res._implicitCall = utils.executeMethod(mailbox.methods.getMailboxes, args, "_");
+                    }
+                }
+            }
+        },
+        response: {
+            accountId: {
+                types: ["string"],
+                after: function (req, response, result) {
+                    response.accountId = req.accountId;
+                }
+            },
+            oldState: {
+                types: ["string"],
+                after: function (req, response, result) {
+                    response.oldState = req.sinceState;
+                }
+            },
+            newState: {
+                types: ["string"],
+                after: function (req, response, result) {
+                    response.newState = result.last_seq + "";
+                }
+            },
+            changed: {
+                types: ["array"],
+                after: function (req, response, result) {
+                    response.changed = _.pluck(_.filter(result.results, function(change) {
+                        return change.deleted === undefined;
+                    }), "id");
+                }
+            },
+            removed: {
+                types: ["array"],
+                after: function (req, response, result) {
+                    response.removed = _.pluck(_.filter(result.results, {deleted: true}), "id");
+                }
+            },
+            onlyCountsChanged: {
+                types: ["boolean"],
+                after: function (req, response, result) {
+                    response.onlyCountsChanged = false;
+                }
+            }
+        },
+        responseName: "mailboxUpdates"
     },
     setMailboxes: {
         func: utils.set,
