@@ -4,17 +4,11 @@
 
 <!-- div -->
 
-## `destroy`
-* <a href="#destroy">`destroy`</a>
-
-<!-- /div -->
-
-<!-- div -->
-
 ## `utils`
 * <a href="#utils-assert">`utils.assert`</a>
 * <a href="#utils-check">`utils.check`</a>
 * <a href="#utils-create">`utils.create`</a>
+* <a href="#utils-destroy">`utils.destroy`</a>
 * <a href="#utils-executeMethod">`utils.executeMethod`</a>
 * <a href="#utils-formatRow">`utils.formatRow`</a>
 * <a href="#utils-get">`utils.get`</a>
@@ -28,27 +22,6 @@
 <!-- /div -->
 
 <!-- div class="doc-container" -->
-
-<!-- div -->
-
-## `destroy`
-
-<!-- div -->
-
-### <a id="destroy"></a>`destroy(result, objId)`
-<a href="#destroy">#</a> [&#x24C8;](https://github.com/arnaudchenyensu/JMAP-Server/blob/master/utils.js#L364 "View in source") [&#x24C9;][1]
-
-Destroy a doc.
-
-#### Arguments
-1. `result` *(Object)*: Result object from utils.set.
-2. `objId` *(string)*: Id of the object in database.
-
-* * *
-
-<!-- /div -->
-
-<!-- /div -->
 
 <!-- div -->
 
@@ -131,6 +104,21 @@ the object created.
 
 <!-- div -->
 
+### <a id="utils-destroy"></a>`utils.destroy(result, objId)`
+<a href="#utils-destroy">#</a> [&#x24C8;](https://github.com/arnaudchenyensu/JMAP-Server/blob/master/utils.js#L366 "View in source") [&#x24C9;][1]
+
+Destroy a doc.
+
+#### Arguments
+1. `result` *(Object)*: Result object from utils.set.
+2. `objId` *(string)*: Id of the object in database.
+
+* * *
+
+<!-- /div -->
+
+<!-- div -->
+
 ### <a id="utils-executeMethod"></a>`utils.executeMethod(method, req, callId)`
 <a href="#utils-executeMethod">#</a> [&#x24C8;](https://github.com/arnaudchenyensu/JMAP-Server/blob/master/utils.js#L60 "View in source") [&#x24C9;][1]
 
@@ -151,7 +139,7 @@ Execute `method`.
 <!-- div -->
 
 ### <a id="utils-formatRow"></a>`utils.formatRow(row)`
-<a href="#utils-formatRow">#</a> [&#x24C8;](https://github.com/arnaudchenyensu/JMAP-Server/blob/master/utils.js#L435 "View in source") [&#x24C9;][1]
+<a href="#utils-formatRow">#</a> [&#x24C8;](https://github.com/arnaudchenyensu/JMAP-Server/blob/master/utils.js#L437 "View in source") [&#x24C9;][1]
 
 Replace `row.doc._id` by `row.doc.id` and delete `row.doc._rev`.
 
@@ -195,7 +183,7 @@ Execute a get request in the database.
 <!-- div -->
 
 ### <a id="utils-getUpdates"></a>`utils.getUpdates(opts)`
-<a href="#utils-getUpdates">#</a> [&#x24C8;](https://github.com/arnaudchenyensu/JMAP-Server/blob/master/utils.js#L404 "View in source") [&#x24C9;][1]
+<a href="#utils-getUpdates">#</a> [&#x24C8;](https://github.com/arnaudchenyensu/JMAP-Server/blob/master/utils.js#L406 "View in source") [&#x24C9;][1]
 
 Get updates for a ressource.
 
@@ -281,4 +269,4 @@ Update an object in database.
 
 <!-- /div -->
 
- [1]: #destroy "Jump back to the TOC."
+ [1]: #utils "Jump back to the TOC."

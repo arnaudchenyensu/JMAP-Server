@@ -356,6 +356,8 @@ utils.update = function (result, objId, updatedProperties, model) {
 /**
  * Destroy a doc.
  *
+ * @static
+ * @memberOf utils
  * @param   {Object}   result Result object from utils.set.
  * @param   {string}   objId  Id of the object in database.
  * @return  {Promise}         Promise which resolves by the value
