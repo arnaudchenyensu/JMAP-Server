@@ -4,6 +4,13 @@
 
 <!-- div -->
 
+## `destroy`
+* <a href="#destroy">`destroy`</a>
+
+<!-- /div -->
+
+<!-- div -->
+
 ## `utils`
 * <a href="#utils-assert">`utils.assert`</a>
 * <a href="#utils-check">`utils.check`</a>
@@ -11,6 +18,7 @@
 * <a href="#utils-executeMethod">`utils.executeMethod`</a>
 * <a href="#utils-formatRow">`utils.formatRow`</a>
 * <a href="#utils-get">`utils.get`</a>
+* <a href="#utils-getUpdates">`utils.getUpdates`</a>
 * <a href="#utils-isCorrectType">`utils.isCorrectType`</a>
 * <a href="#utils-set">`utils.set`</a>
 * <a href="#utils-update">`utils.update`</a>
@@ -20,6 +28,27 @@
 <!-- /div -->
 
 <!-- div class="doc-container" -->
+
+<!-- div -->
+
+## `destroy`
+
+<!-- div -->
+
+### <a id="destroy"></a>`destroy(result, objId)`
+<a href="#destroy">#</a> [&#x24C8;](https://github.com/arnaudchenyensu/JMAP-Server/blob/master/utils.js#L364 "View in source") [&#x24C9;][1]
+
+Destroy a doc.
+
+#### Arguments
+1. `result` *(Object)*: Result object from utils.set.
+2. `objId` *(string)*: Id of the object in database.
+
+* * *
+
+<!-- /div -->
+
+<!-- /div -->
 
 <!-- div -->
 
@@ -46,7 +75,7 @@ Use for checking type. Basic wrapper for some lodash method (_.isString, _.isNum
 <!-- div -->
 
 ### <a id="utils-check"></a>`utils.check(propertiesModel, properties, checks)`
-<a href="#utils-check">#</a> [&#x24C8;](https://github.com/arnaudchenyensu/JMAP-Server/blob/master/utils.js#L200 "View in source") [&#x24C9;][1]
+<a href="#utils-check">#</a> [&#x24C8;](https://github.com/arnaudchenyensu/JMAP-Server/blob/master/utils.js#L211 "View in source") [&#x24C9;][1]
 
 Iterate over propertiesModel and invoke each check in checks.
 Stop check iteration for a property as soon as a check does not pass.
@@ -82,7 +111,7 @@ utils.check(models.mailbox, properties, ["serverSetOnly", "checkTypes", "checksW
 <!-- div -->
 
 ### <a id="utils-create"></a>`utils.create(result, creationId, obj, model)`
-<a href="#utils-create">#</a> [&#x24C8;](https://github.com/arnaudchenyensu/JMAP-Server/blob/master/utils.js#L266 "View in source") [&#x24C9;][1]
+<a href="#utils-create">#</a> [&#x24C8;](https://github.com/arnaudchenyensu/JMAP-Server/blob/master/utils.js#L277 "View in source") [&#x24C9;][1]
 
 Create `obj` in database.
 
@@ -122,7 +151,7 @@ Execute `method`.
 <!-- div -->
 
 ### <a id="utils-formatRow"></a>`utils.formatRow(row)`
-<a href="#utils-formatRow">#</a> [&#x24C8;](https://github.com/arnaudchenyensu/JMAP-Server/blob/master/utils.js#L368 "View in source") [&#x24C9;][1]
+<a href="#utils-formatRow">#</a> [&#x24C8;](https://github.com/arnaudchenyensu/JMAP-Server/blob/master/utils.js#L435 "View in source") [&#x24C9;][1]
 
 Replace `row.doc._id` by `row.doc.id` and delete `row.doc._rev`.
 
@@ -149,7 +178,7 @@ formatRow(row);
 <!-- div -->
 
 ### <a id="utils-get"></a>`utils.get(opts)`
-<a href="#utils-get">#</a> [&#x24C8;](https://github.com/arnaudchenyensu/JMAP-Server/blob/master/utils.js#L110 "View in source") [&#x24C9;][1]
+<a href="#utils-get">#</a> [&#x24C8;](https://github.com/arnaudchenyensu/JMAP-Server/blob/master/utils.js#L121 "View in source") [&#x24C9;][1]
 
 Execute a get request in the database.
 
@@ -159,6 +188,35 @@ Execute a get request in the database.
 #### Returns
 *(Promise)*:      Promise which resolves with {errors: , deleted: , rows: }.
 
+* * *
+
+<!-- /div -->
+
+<!-- div -->
+
+### <a id="utils-getUpdates"></a>`utils.getUpdates(opts)`
+<a href="#utils-getUpdates">#</a> [&#x24C8;](https://github.com/arnaudchenyensu/JMAP-Server/blob/master/utils.js#L404 "View in source") [&#x24C9;][1]
+
+Get updates for a ressource.
+
+#### Arguments
+1. `opts` *(Object)*: Options for the request -- `sinceState`, `startkey`
+
+#### Example
+```js
+{ results:
+    [ { id: 'examples@examples.com_mailbox_test',
+        changes: [Object],
+         deleted: true,
+        seq: 4723 },
+      { id: 'examples@examples.com_mailbox_954bd560-0e6c-11e5-b8af-d507cf2ec24b',
+        changes: [Object],
+        deleted: true,
+        seq: 5043 },
+        ...
+     ]
+}
+```
 * * *
 
 <!-- /div -->
@@ -184,7 +242,7 @@ Check that `val` is one of the type in `types`.
 <!-- div -->
 
 ### <a id="utils-set"></a>`utils.set(opts)`
-<a href="#utils-set">#</a> [&#x24C8;](https://github.com/arnaudchenyensu/JMAP-Server/blob/master/utils.js#L142 "View in source") [&#x24C9;][1]
+<a href="#utils-set">#</a> [&#x24C8;](https://github.com/arnaudchenyensu/JMAP-Server/blob/master/utils.js#L153 "View in source") [&#x24C9;][1]
 
 Execute a set request in the database.
 
@@ -202,7 +260,7 @@ Execute a set request in the database.
 <!-- div -->
 
 ### <a id="utils-update"></a>`utils.update(result, objId, updatedProperties, model)`
-<a href="#utils-update">#</a> [&#x24C8;](https://github.com/arnaudchenyensu/JMAP-Server/blob/master/utils.js#L308 "View in source") [&#x24C9;][1]
+<a href="#utils-update">#</a> [&#x24C8;](https://github.com/arnaudchenyensu/JMAP-Server/blob/master/utils.js#L319 "View in source") [&#x24C9;][1]
 
 Update an object in database.
 
@@ -223,4 +281,4 @@ Update an object in database.
 
 <!-- /div -->
 
- [1]: #utils "Jump back to the TOC."
+ [1]: #destroy "Jump back to the TOC."

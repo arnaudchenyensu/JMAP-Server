@@ -355,9 +355,10 @@ utils.update = function (result, objId, updatedProperties, model) {
 
 /**
  * Destroy a doc.
+ *
  * @param   {Object}   result Result object from utils.set.
  * @param   {string}   objId  Id of the object in database.
- * @return  {Promise}         Promise which resolve by the value
+ * @return  {Promise}         Promise which resolves by the value
  *                            returns by `db.remove()`.
  */
 utils.destroy = function (result, objId) {
@@ -378,6 +379,28 @@ utils.destroy = function (result, objId) {
     });
 };
 
+/**
+ * Get updates for a ressource.
+ *
+ * @static
+ * @memberOf utils
+ * @param  {Object}  opts Options for the request -- `sinceState`, `startkey`
+ * @return {Promise}      Promise
+ * @example
+ *
+ * { results:
+ *     [ { id: 'examples@examples.com_mailbox_test',
+ *         changes: [Object],
+ *          deleted: true,
+ *         seq: 4723 },
+ *       { id: 'examples@examples.com_mailbox_954bd560-0e6c-11e5-b8af-d507cf2ec24b',
+ *         changes: [Object],
+ *         deleted: true,
+ *         seq: 5043 },
+ *         ...
+ *      ]
+ * }
+ */
 utils.getUpdates = function (opts) {
     /** TODO: handle onlyCountsChanged */
     return db.changes({
