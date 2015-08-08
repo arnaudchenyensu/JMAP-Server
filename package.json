@@ -18,7 +18,7 @@
     "mail"
   ],
   "author": "Arnaud CHEN-YEN-SU",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/arnaudchenyensu/JMAP-Server/issues"
   },
