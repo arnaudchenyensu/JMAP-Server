@@ -43,7 +43,17 @@ app.post('/', function (req, res) {
     });
 });
 
-var server = app.listen(3000, function () {
+var program = require('commander');
+
+program
+    .version('0.0.1')
+    .option('-p, --port [port]', 'Specify the port to use (default to 3000')
+    .parse(process.argv);
+
+var port = program.port || 3000;
+console.log("PORT: ", port);
+
+var server = app.listen(port, function () {
     var host = server.address().address;
     var port = server.address().port;
 
