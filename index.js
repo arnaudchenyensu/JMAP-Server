@@ -54,7 +54,6 @@ program
 
 if (program.sync) config.sync();
 var port = program.port || 3000;
-console.log("PORT: ", port);
 
 var server = app.listen(port, function () {
     var host = server.address().address;
