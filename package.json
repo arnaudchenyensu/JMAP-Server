@@ -15,7 +15,8 @@
   },
   "keywords": [
     "jmap",
-    "mail"
+    "mail",
+    "server"
   ],
   "author": "Arnaud CHEN-YEN-SU",
   "license": "MIT",
