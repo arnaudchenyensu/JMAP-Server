@@ -1,5 +1,4 @@
 var PouchDB = require('pouchdb');
-PouchDB.sync('jmap', 'http://localhost:5984/jmap', {live: true});
 var db      = new PouchDB('jmap');
 
 /**
@@ -24,5 +23,8 @@ db.get(mydesign._id).then(function (res) {
 });
 
 module.exports = {
-    'db': db
+    'db': db,
+    sync: function () {
+        return PouchDB.sync('jmap', 'http://localhost:5984/jmap', {live: true});
+    }
 };

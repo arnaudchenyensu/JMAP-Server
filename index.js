@@ -5,6 +5,7 @@ var Promise    = require('bluebird');
 var models     = require('./models.js');
 var _          = require('lodash');
 var utils      = require('./utils');
+var config     = require('./config.js');
 
 var methods = {};
 _.forEach(models, function (model) {
@@ -48,8 +49,10 @@ var program = require('commander');
 program
     .version('0.0.1')
     .option('-p, --port [port]', 'Specify the port to use (default to 3000')
+    .option('-s, --sync', 'Sync PouchDB to local CouchDB server')
     .parse(process.argv);
 
+if (program.sync) config.sync();
 var port = program.port || 3000;
 console.log("PORT: ", port);
 
