@@ -1,0 +1,12 @@
+[
+    [
+        "getThreads",
+        {
+            "accountId": "examples@examples.com",
+            "ids": ["test_thread", "test_thread_2"],
+            "fetchMessages": false,
+            "fetchMessageProperties": null
+        },
+        "#1"
+    ]
+]
