@@ -48,7 +48,7 @@ var program = require('commander');
 
 program
     .version('0.0.1')
-    .option('-p, --port [port]', 'Specify the port to use (default to 3000')
+    .option('-p, --port [port]', 'Specify the port to use (default to 3000)')
     .option('-s, --sync', 'Sync PouchDB to local CouchDB server')
     .parse(process.argv);
 
