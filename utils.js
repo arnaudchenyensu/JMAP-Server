@@ -5,6 +5,10 @@ var Promise = require('bluebird');
 
 var utils = {};
 
+utils.date = function () {
+    return (new Date().toJSON()).split('.')[0] + 'Z';
+};
+
 /**
  * Use for checking type. Basic wrapper for some lodash method (_.isString, _.isNumber, ...).
  *
