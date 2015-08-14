@@ -146,7 +146,7 @@ mailbox.methods = {
                 types: ["string", "null"],
                 defaultValue: null,
                 before: function (req, opts) {
-                    // if req.accountId == null, the primary account is used
+                    // TODO if req.accountId == null, the primary account is used
                     opts.startkey = req.accountId + '_mailbox_';
                     opts.endkey   = req.accountId + '_mailbox_\uffff';
                 }
