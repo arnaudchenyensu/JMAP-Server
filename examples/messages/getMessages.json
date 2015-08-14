@@ -1,0 +1,10 @@
+[
+    [
+        "getMessages",
+        {
+            "accountId": "examples@examples.com",
+            "ids": ["test_message"]
+        },
+        "#1"
+    ]
+]

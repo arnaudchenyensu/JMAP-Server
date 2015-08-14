@@ -1,0 +1,15 @@
+[
+    [
+        "setMessages",
+        {
+            "accountId": "examples@examples.com",
+            "create": {
+                "m1": {
+                    "mailboxIds": ["fakeId"],
+                    "textBody": "dummy text body"
+                }
+            }
+        },
+        "#1"
+    ]
+]
