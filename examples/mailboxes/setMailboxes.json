@@ -4,19 +4,9 @@
         {
             "accountId": "examples@examples.com",
             "create": {
-                "mailbox": {
-                    "name": "example 1",
-                    "parentId": null,
-                    "role": null,
-                    "mayXXX": ""
-                },
-                "mailbox2": {
-                    "name": "example 2",
-                    "parentId": null,
-                    "role": null,
-                    "mayXXX": "",
-                    "precedence": -10,
-                    "mustBeOnlyMailbox": true
+                "k1": {
+                    "name": "fakeName",
+                    "role": null
                 }
             }
         },
