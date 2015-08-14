@@ -61,11 +61,3 @@ var server = app.listen(port, function () {
 
     console.log('Listening at http://%s:%s', host, port);
 });
-
-// core.fixtures();
-
-// every request received will be transmit
-// to core.js (maybe change the name?)
-// like so: return core['getMessages'](args)
-// this means that index.js will only received
-// request and transmit responses (using express?)
