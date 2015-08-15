@@ -1,5 +1,5 @@
 {
-  "name": "JMAP-Server",
+  "name": "jmap-server",
   "version": "0.0.1",
   "description": "JMAP Server",
   "main": "index.js",
