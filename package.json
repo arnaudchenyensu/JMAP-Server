@@ -1,6 +1,6 @@
 {
   "name": "jmap-server",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "JMAP Server",
   "bin": "index.js",
   "directories": {
