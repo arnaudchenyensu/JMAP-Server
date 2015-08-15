@@ -18,7 +18,7 @@
     "mail",
     "server"
   ],
-  "author": "Arnaud CHEN-YEN-SU",
+  "author": "Arnaud CHEN-YEN-SU <arnaud.chenyensu@gmail.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/arnaudchenyensu/JMAP-Server/issues"
