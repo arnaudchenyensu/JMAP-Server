@@ -17,7 +17,7 @@ First launch the server:
 jmap-server
 ```
 
-Then you can test some requests in the examples folder:
+Then you can test some requests in the [examples folder](https://github.com/arnaudchenyensu/JMAP-Server/tree/master/examples):
 
 ```
 curl -d "@examples/mailboxes/setMailboxes.json" -H "Content-Type: application/json" http://127.0.0.1:3000
